@@ -79,7 +79,7 @@
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)includes;$(SolutionDir)include;$(IncludePath)</IncludePath>
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,7 +133,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include;$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\Sprite.cpp" />
     <ClCompile Include="sources\DataStructures\Container.cpp" />
     <ClCompile Include="sources\GameObjectLib.cpp" />
     <ClCompile Include="sources\Maths\Vector2.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="include\Objects\Collider.h" />
     <ClInclude Include="include\Objects\Component.h" />
     <ClInclude Include="include\Objects\GameObject.h" />
+    <ClInclude Include="include\Objects\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="includes\DataStructures\Container.inl" />

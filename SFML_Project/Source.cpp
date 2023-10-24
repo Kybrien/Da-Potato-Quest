@@ -1,11 +1,16 @@
+#include <iostream>
 #include <SFML/Graphics.hpp>
+#include "Maths/Vector2.h"
+#include "Objects/Sprite.h"
 #include "DataStructures/Container.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(640, 480), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+
+    GameObject* testSprite = new GameObject(0, 0, 10, 10);
+    Sprite* spriteComponent = new Sprite(testSprite, "potato.png");
+    testSprite->addComponent(spriteComponent);
 
     while (window.isOpen())
     {
@@ -14,10 +19,22 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                spriteComponent->Move(Vector2<double>::left);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                //sprite.move(-1, 0);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                //sprite.move(-1, 0);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                //sprite.move(-1, 0);
+            }
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(spriteComponent->sprite);
         window.display();
     }
 
