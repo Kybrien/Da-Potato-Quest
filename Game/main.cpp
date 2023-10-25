@@ -45,10 +45,10 @@ int main()
 	};
 
 	TileMap map;
-	if (!map.load("assets/tilesets/Hills.png", sf::Vector2u(16, 16), level, 16, 8))
-		return -1;
+	//if (!map.load("assets/tilesets/Hills.png", sf::Vector2u(16, 16), level, 16, 8))
+	//	return -1;
 
-	map.loadmap("test");
+	map.loadmap("PotatoV1");
 
 	sf::Clock clock;
 	sf::Time time;
