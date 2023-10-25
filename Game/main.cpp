@@ -16,7 +16,7 @@ int main()
 		return EXIT_FAILURE;
 	sf::Sprite sprite(texture);
 
-	auto window = new sf::RenderWindow(sf::VideoMode(600, 600), "SFML Engine");
+	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
 
 	while (window->isOpen())
 	{
@@ -26,8 +26,14 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window->close();
 			if (event.type == sf::Event::KeyPressed)
-				if (event.key.code == sf::Keyboard::Space)
+				if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
 					player->SetPosition(player->GetPosition() + Maths::Vector2f::Right);
+				if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Q)
+					player->SetPosition(player->GetPosition() + Maths::Vector2f::Left);
+				if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Z)
+					player->SetPosition(player->GetPosition() + Maths::Vector2f::Up);
+				if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+					player->SetPosition(player->GetPosition() + Maths::Vector2f::Down);
 		}
 
 		scene.Update();

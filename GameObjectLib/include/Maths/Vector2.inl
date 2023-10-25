@@ -221,10 +221,10 @@ template<typename T>
 const Vector2<T> Vector2<T>::UnitY(0, 1);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Up(0, 1);
+const Vector2<T> Vector2<T>::Up(0, -1);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Down(0, -1);
+const Vector2<T> Vector2<T>::Down(0, 1);
 
 template<typename T>
 const Vector2<T> Vector2<T>::Left(-1, 0);
