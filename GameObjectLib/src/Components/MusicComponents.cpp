@@ -6,7 +6,7 @@ MusicComponent::~MusicComponent() {}
 
 bool MusicComponent::LoadMusic(const std::string& filePath)
 {
-    return music.openFromFile(filePath);
+    return music.openFromFile("resources/" + filePath);
 }
 
 void MusicComponent::Play()

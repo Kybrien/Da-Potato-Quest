@@ -13,15 +13,15 @@ int main()
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");	
 
 	MusicComponent musicComponent(nullptr);
-
-	//musicComponent.LoadMusic("music.mp3");
+	musicComponent.LoadMusic("music.ogg");
+	musicComponent.Play();
 
 	sf::Texture texture;
 	if (!texture.loadFromFile("resources/potato.png"))
 		return EXIT_FAILURE;
 	sf::Sprite sprite(texture);
 
-	auto window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML Engine");
+	auto window = new sf::RenderWindow(sf::VideoMode(300, 300), "SFML Engine");
 
 	while (window->isOpen())
 	{
