@@ -19,6 +19,7 @@ void Sprite::Render(sf::RenderWindow* _window)
 
 	const auto position = GetOwner()->GetPosition();
 	sprite->setPosition(position.x, position.y);
+	sprite->setScale(0.05, 0.05);
 
 	_window->draw(*sprite);
 }

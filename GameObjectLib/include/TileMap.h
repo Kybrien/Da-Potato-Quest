@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include <fstream>
 #include "json.hpp"
+#include "Maths/Vector2.h"
 
 using json = nlohmann::json;
 
@@ -9,15 +10,17 @@ class TileMap : public sf::Drawable, public sf::Transformable
 {
 public:
 
-    bool load(const std::string& tileset, sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height)
+    bool load(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height)
     {
         // on charge la texture du tileset
-        if (!m_tileset.loadFromFile(tileset))
+        if (!m_tileset.loadFromFile("assets/tilesets/tileset.png"))
             return false;
 
         // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
-        m_vertices.setPrimitiveType(sf::Quads);
-        m_vertices.resize(width * height * 4);
+        sf::VertexArray* layer_vertices = new sf::VertexArray;
+
+        layer_vertices->setPrimitiveType(sf::Quads);
+        layer_vertices->resize(width * height * 4);
 
         // on remplit le tableau de vertex, avec un quad par tuile
         for (unsigned int i = 0; i < width; ++i)
@@ -33,7 +36,7 @@ public:
                     int tv = tileNumber / (m_tileset.getSize().x / tileSize.x);
 
                     // on récupère un pointeur vers le quad à définir dans le tableau de vertex
-                    sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
+                    sf::Vertex* quad = &(*layer_vertices)[(i + j * width) * 4];
 
                     // on définit ses quatre coins
                     quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
@@ -49,6 +52,8 @@ public:
                 }
             }
 
+        m_layers.push_back(layer_vertices);
+
         return true;
     }
 
@@ -56,20 +61,38 @@ public:
         std::ifstream mapf("assets/maps/" + tileset + ".json");
         json data = json::parse(mapf);
 
+        for (int i = 0; i < data["tilesets"].size(); i++) {
+            sf::Texture* newTileset = new sf::Texture;
+            std::string tilesetName = data["tilesets"][i]["name"];
+            newTileset->loadFromFile("assets/tilesets/" + tilesetName + ".png");
+            std::cout << "TILESET " + tilesetName + " LOADED SUCCESSFULLY." << std::endl;
+        }
+
         for (int i = 0; i < data["layers"].size(); i++) {
             if (data["layers"][i]["type"] == "tilelayer") {
                 const std::vector<int> level = data["layers"][i]["data"];
 
-                const std::string& newTileset = data["tilesets"][i]["name"];
                 unsigned int width = data["layers"][i]["width"];
                 unsigned int height = data["layers"][i]["height"];
                 sf::Vector2u tileSize(16, 16);
 
-                load("assets/tilesets/" + newTileset + ".png", tileSize, level, width, height);
+                m_size.SetXY(width * 16, height * 16);
+
+                load(tileSize, level, width, height);
+
+                std::cout << "LAYER " << data["layers"][i]["name"] << " LOADED SUCCESSFULLY." << std::endl;
             }
         }
 
         return true;
+    }
+
+    int getWidth() {
+        return m_size.x;
+    }
+
+    int getHeight() {
+        return m_size.y;
     }
 
 private:
@@ -83,9 +106,15 @@ private:
         states.texture = &m_tileset;
 
         // et on dessine enfin le tableau de vertex
-        target.draw(m_vertices, states);
+        for (int i = 0; i < m_layers.size(); ++i) {
+            // Appliquer la texture actuelle
+
+            // Dessiner le vertexArray
+            target.draw(*m_layers[i], states);
+        }
     }
 
-    sf::VertexArray m_vertices;
+    std::vector<sf::VertexArray*> m_layers;
     sf::Texture m_tileset;
+    Maths::Vector2<int> m_size = Maths::Vector2<int>(0, 0);
 };

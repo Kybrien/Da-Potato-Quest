@@ -25,7 +25,7 @@ void Button::Render(sf::RenderWindow* _window)
 
 	const auto position = GetOwner()->GetPosition();
 	shape->setPosition(position.x, position.y);
-	shape->setSize(sf::Vector2f(230.f, 120.f));
+	shape->setSize(sf::Vector2f(300.f, 120.f));
 	shape->setFillColor(color);
 	text->setPosition(position.x, position.y);
 	text->setCharacterSize(24);

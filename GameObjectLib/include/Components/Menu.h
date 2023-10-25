@@ -12,6 +12,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
+	void IsClicked(const sf::Vector2f& mousePos);
 
 private:
 	int selectedItemIndex;

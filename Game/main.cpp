@@ -11,13 +11,44 @@
 void ProcessInput(GameObject* player, float dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		player->SetPosition(player->GetPosition() + Maths::Vector2f(1, 0) * dt * 2);
+		player->SetPosition(player->GetPosition() + Maths::Vector2f(1, 0) * dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-		player->SetPosition(player->GetPosition() + Maths::Vector2f(-1, 0) * dt * 2);
+		player->SetPosition(player->GetPosition() + Maths::Vector2f(-1, 0) * dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, -1) * dt * 2);
+		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, -1) * dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt * 2);
+		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt);
+}
+
+void HandleCamera(sf::RenderWindow* window, sf::View camera, GameObject* player, TileMap map) {
+	sf::Vector2f playerPosition = sf::Vector2f(player->GetPosition().x, player->GetPosition().y);
+
+	sf::Vector2f windowSize(window->getSize().x, window->getSize().y);
+
+	float zoomLevel = 0.5f;
+
+	sf::Vector2f cameraSize = windowSize * zoomLevel;
+
+	float halfCameraWidth = cameraSize.x / 2.0f;
+	float halfCameraHeight = cameraSize.y / 2.0f;
+
+	if (playerPosition.x - halfCameraWidth < 0) {
+		playerPosition.x = halfCameraWidth;
+	}
+	if (playerPosition.x + halfCameraWidth > map.getWidth()) {
+		playerPosition.x = map.getWidth() - halfCameraWidth;
+	}
+	if (playerPosition.y - halfCameraHeight < 0) {
+		playerPosition.y = halfCameraHeight;
+	}
+	if (playerPosition.y + halfCameraHeight > map.getHeight()) {
+		playerPosition.y = map.getHeight() - halfCameraHeight;
+	}
+
+	camera.setCenter(playerPosition);
+	camera.setSize(cameraSize);
+
+	window->setView(camera);
 }
 
 int main()
@@ -28,27 +59,18 @@ int main()
 
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");
 
-	auto window = new sf::RenderWindow(sf::VideoMode(640, 480), "SFML Engine");
+	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
 
-	//Menu menu(window);
-	
-	const int level[] =
-	{
-		0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
-		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
-		0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
-		0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
-		2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
-		0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
-	};
+	Menu menu(window);
 
 	TileMap map;
-	//if (!map.load("assets/tilesets/Hills.png", sf::Vector2u(16, 16), level, 16, 8))
-	//	return -1;
+	map.loadmap("test2");
 
-	map.loadmap("PotatoV1");
+	sf::View camera;
+	camera.setSize(window->getSize().x / 2, window->getSize().y / 2);
+	camera.setCenter(0, 0);
+
+	window->setView(camera);
 
 	sf::Clock clock;
 	sf::Time time;
@@ -71,6 +93,7 @@ int main()
 		ProcessInput(player, dt * speed);
 
 		scene.Update();
+		HandleCamera(window, camera, player, map);
 		window->clear(sf::Color::Black);
 		window->draw(map);
 		scene.Render(window);
