@@ -12,14 +12,9 @@ int main()
 
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");	
 
-	/*MusicComponent musicComponent(nullptr);
+	MusicComponent musicComponent(nullptr);
 
-	if (musicComponent.LoadMusic("music.mp3")) {
-		std::cout << "ok" << std::endl;
-	}
-	else {
-		std::cout << "pas" << std::endl;
-	}*/
+	//musicComponent.LoadMusic("music.mp3");
 
 	sf::Texture texture;
 	if (!texture.loadFromFile("resources/potato.png"))

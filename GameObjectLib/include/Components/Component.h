@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Audio/Music.hpp>
 
 #include "GameObject.h"
 
@@ -23,3 +24,20 @@ private:
 	GameObject* owner = nullptr;
 };
 
+class MusicComponent : public Component
+{
+public:
+    MusicComponent(GameObject* owner);
+    ~MusicComponent();
+
+    void Update() override;
+    void Render(sf::RenderWindow* _window) override;
+
+    bool LoadMusic(const std::string& filePath);
+    void Play();
+    void Pause();
+    void Stop();
+
+private:
+    sf::Music music;
+};
