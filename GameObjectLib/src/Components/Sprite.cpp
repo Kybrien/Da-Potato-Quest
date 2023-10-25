@@ -3,7 +3,7 @@
 
 Sprite::Sprite(std::string newTexture)
 {
-	if (texture.loadFromFile("resources/" + newTexture))
+	if (texture.loadFromFile("assets/sprites/" + newTexture))
 		sprite = new sf::Sprite(texture);
 }
 

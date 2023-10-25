@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Button.h" />
+    <ClInclude Include="include\Components\Map.h" />
+    <ClInclude Include="include\Components\Menu.h" />
     <ClInclude Include="include\Components\ShapeRenderer.h" />
     <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
@@ -26,6 +29,8 @@
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
+    <ClCompile Include="src\Components\Button.cpp" />
+    <ClCompile Include="src\Components\Menu.cpp" />
     <ClCompile Include="src\Components\ShapeRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,10 @@
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 #include "GameObject.h"
 #include "Scene.h"
+#include "Menu.h"
 
 int main()
 {
@@ -11,15 +14,13 @@ int main()
 
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");
 
-	sf::Texture texture;
-	if (!texture.loadFromFile("resources/potato.png"))
-		return EXIT_FAILURE;
-	sf::Sprite sprite(texture);
-
 	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
+
+	Menu menu(window);
 
 	while (window->isOpen())
 	{
+
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
@@ -41,6 +42,7 @@ int main()
 		scene.Render(window);
 		window->display();
 	}
+
 
 	return 0;
 }
