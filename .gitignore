@@ -28,7 +28,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -132,7 +131,6 @@ StyleCopReport.xml
 *.ilk
 *.meta
 *.iobj
-*.pdb
 *.ipdb
 *.pgc
 *.pgd
