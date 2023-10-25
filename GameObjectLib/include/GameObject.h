@@ -4,6 +4,7 @@
 
 #include "Maths/Vector2.h"
 #include "Components/Component.h"
+#include "Components/MusicComponent.h"
 
 class Component;
 

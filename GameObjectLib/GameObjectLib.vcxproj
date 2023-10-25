@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\MusicComponent.h" />
     <ClInclude Include="include\Components\ShapeRenderer.h" />
     <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
+    <ClCompile Include="src\Components\MusicComponent.cpp" />
     <ClCompile Include="src\Components\ShapeRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,26 +96,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PublicIncludeDirectories>$(ProjectDir)include\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(SolutionDir)include;$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)include\;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,7 +164,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

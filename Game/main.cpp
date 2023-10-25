@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Scene.h"
+#include <iostream>
 
 int main()
 {
@@ -9,14 +10,23 @@ int main()
 
 	GameObject* player = scene.CreateDummyGameObject("Player", 200.f, "potato.png");
 
-	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");
+	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");	
+
+	/*MusicComponent musicComponent(nullptr);
+
+	if (musicComponent.LoadMusic("music.mp3")) {
+		std::cout << "ok" << std::endl;
+	}
+	else {
+		std::cout << "pas" << std::endl;
+	}*/
 
 	sf::Texture texture;
 	if (!texture.loadFromFile("resources/potato.png"))
 		return EXIT_FAILURE;
 	sf::Sprite sprite(texture);
 
-	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
+	auto window = new sf::RenderWindow(sf::VideoMode(1000, 1000), "SFML Engine");
 
 	while (window->isOpen())
 	{

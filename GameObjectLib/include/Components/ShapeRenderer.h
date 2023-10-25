@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include "Component.h"
+#include "Components/Component.h"
 
 class ShapeRenderer : public Component
 {
