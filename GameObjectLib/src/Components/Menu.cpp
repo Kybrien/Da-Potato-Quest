@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Scene.h"
 #include <cstdlib>
 #include "Components/Menu.h"
@@ -5,11 +6,19 @@
 #include "GameObject.h"
 
 Menu::Menu(sf::RenderWindow* _window) {
-	//if (!font.loadFromFile(arial.ttf)) {
-	//	//handle Error
-	//}
+	menuWindow = _window;
+}
 
-	Scene menu;
+Menu::~Menu() {
+	delete menu;
+}
+
+void Menu::Close() {
+	open = false;
+}
+
+Scene Menu::MainMenu() {
+	menu = new Scene;
 
 	// Charger la texture de l'arrière-plan
 	sf::Texture backgroundTexture;
@@ -18,46 +27,46 @@ Menu::Menu(sf::RenderWindow* _window) {
 	}
 
 	// Créer le rectangle de fond (background) avec la texture chargée
-	sf::RectangleShape background(sf::Vector2f(_window->getSize().x, _window->getSize().y));
+	sf::RectangleShape background(sf::Vector2f(menuWindow->getSize().x, menuWindow->getSize().y));
 	background.setTexture(&backgroundTexture); // Appliquer la texture à la forme
 
 	// Créer le premier bouton à partir du coin supérieur droit de l'écran
-	GameObject* button1 = menu.CreateGameObject("bouton1");
+	GameObject* button1 = menu->CreateGameObject("bouton1");
 	button1->SetPosition(Maths::Vector2f(1500, 230));
 
 	Button* btncomponent1 = new Button("Bouton 1");
 	button1->AddComponent(btncomponent1);
 
 	// Créer le deuxième bouton en dessous du premier
-	GameObject* button2 = menu.CreateGameObject("bouton2");
+	GameObject* button2 = menu->CreateGameObject("bouton2");
 	button2->SetPosition(Maths::Vector2f(1500, 430));
 
 	Button* btncomponent2 = new Button("Bouton 2");
 	button2->AddComponent(btncomponent2);
 
 	// Créer le troisième bouton en dessous du deuxième
-	GameObject* button3 = menu.CreateGameObject("bouton3");
+	GameObject* button3 = menu->CreateGameObject("bouton3");
 	button3->SetPosition(Maths::Vector2f(1500, 630));
 
 	Button* btncomponent3 = new Button("Bouton 3");
 	button3->AddComponent(btncomponent3);
 
-	while (true) {
-		menu.Update();
+	while (open) {
+		menu->Update();
 
 		sf::Event event;
-		while (_window->pollEvent(event)) {
+		while (menuWindow->pollEvent(event)) {
 			if (event.type == sf::Event::Closed) {
-				_window->close();
-				return; 
+				menuWindow->close();
+				Close();
 			}
 
 			if (event.type == sf::Event::MouseButtonPressed) {
-				sf::Vector2f mousePos = _window->mapPixelToCoords(sf::Mouse::getPosition(*_window));
+				sf::Vector2f mousePos = menuWindow->mapPixelToCoords(sf::Mouse::getPosition(*menuWindow));
 
 				// Vérifier si le bouton 1 est cliqué
 				if (btncomponent1->IsClicked(mousePos)) {
-					return;
+					Close();
 				}
 
 				// Vérifier si le bouton 2 est cliqué
@@ -67,22 +76,20 @@ Menu::Menu(sf::RenderWindow* _window) {
 
 				// Vérifier si le bouton 3 est cliqué
 				else if (btncomponent3->IsClicked(mousePos)) {
-					_window->close();
-					return;
+					menuWindow->close();
+					Close();
 					//quitte le programme
 				}
 			}
 		}
 
 		// Dessiner le fond
-		_window->clear();
-		_window->draw(background);
+		menuWindow->clear();
+		menuWindow->draw(background);
 
-		menu.Render(_window);
-		_window->display();
+		menu->Render(menuWindow);
+		menuWindow->display();
 	}
-}
 
-Menu::~Menu() {
-
+	return *menu;
 }

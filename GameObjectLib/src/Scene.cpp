@@ -22,6 +22,14 @@ void Scene::Render(sf::RenderWindow* _window)
 	}
 }
 
+sf::View Scene::getGamera() {
+	return camera;
+}
+
+void Scene::setCamera(sf::View newCamera) {
+	camera = newCamera;
+}
+
 GameObject* Scene::CreateGameObject(const std::string& _name)
 {
 	auto gameObject = new GameObject();
