@@ -68,7 +68,6 @@ int main()
 
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");
 
-
 	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
 
 	MusicComponent music(nullptr);
@@ -76,11 +75,12 @@ int main()
 	music.Play(true);
 
 	Menu menu(window);
+	menu.MainMenu();
 
 	TileMap map;
 	map.loadmap("test2");
 
-	sf::View camera = CreateCamera(window, 2);
+	scene.setCamera(CreateCamera(window, 2));
 
 	sf::Clock clock;
 	sf::Time time;
@@ -103,7 +103,7 @@ int main()
 		ProcessInput(player, dt * speed);
 
 		scene.Update();
-		HandleCamera(window, camera, player, map);
+		HandleCamera(window, scene.getGamera(), player, map);
 		window->clear(sf::Color::Black);
 		window->draw(map);
 		scene.Render(window);
