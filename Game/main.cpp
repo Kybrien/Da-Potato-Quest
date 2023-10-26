@@ -5,6 +5,7 @@
 #include "TileMap.h"
 
 #include "GameObject.h"
+#include "Components/MusicComponent.h"
 #include "Scene.h"
 #include "Menu.h"
 
@@ -67,7 +68,12 @@ int main()
 
 	GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png");
 
+
 	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
+
+	MusicComponent music(nullptr);
+	music.LoadMusic("music.ogg");
+	music.Play(true);
 
 	Menu menu(window);
 

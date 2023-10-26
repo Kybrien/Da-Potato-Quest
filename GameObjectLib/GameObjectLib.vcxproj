@@ -29,10 +29,12 @@
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Maths\Vector2.h" />
+    <ClCompile Include="src\MusicComponent.cpp" />
     <ClCompile Include="src\Components\Button.cpp" />
     <ClCompile Include="src\Components\Menu.cpp" />
     <ClCompile Include="src\Components\ShapeRenderer.cpp" />
     <ClInclude Include="include\TileMap.h" />
+    <ClInclude Include="include\Components\MusicComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\Sprite.cpp" />
