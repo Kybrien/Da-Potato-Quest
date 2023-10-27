@@ -26,9 +26,7 @@ void HandleCamera(sf::RenderWindow* window, sf::View camera, GameObject* player,
 
 	sf::Vector2f windowSize(window->getSize().x, window->getSize().y);
 
-	float zoomLevel = 0.5f;
-
-	sf::Vector2f cameraSize = windowSize * zoomLevel;
+	sf::Vector2f cameraSize = camera.getSize();
 
 	float halfCameraWidth = cameraSize.x / 2.0f;
 	float halfCameraHeight = cameraSize.y / 2.0f;
@@ -47,14 +45,13 @@ void HandleCamera(sf::RenderWindow* window, sf::View camera, GameObject* player,
 	}
 
 	camera.setCenter(playerPosition);
-	camera.setSize(cameraSize);
 
 	window->setView(camera);
 }
 
 sf::View CreateCamera(sf::RenderWindow* window, float zoom) {
 	sf::View camera;
-	camera.setSize(window->getSize().x / 2, window->getSize().y / 2);
+	camera.setSize(window->getSize().x / zoom, window->getSize().y / zoom);
 	camera.setCenter(0, 0);
 	window->setView(camera);
 	return camera;
@@ -80,13 +77,13 @@ int main()
 	TileMap map;
 	map.loadmap("test2");
 
-	scene.setCamera(CreateCamera(window, 2));
+	scene.setCamera(CreateCamera(window, 5));
 
 	sf::Clock clock;
 	sf::Time time;
 
 	float dt = 0;
-	const int speed = 100;
+	const int speed = 60;
 
 	while (window->isOpen())
 	{
