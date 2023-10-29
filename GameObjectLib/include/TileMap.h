@@ -3,6 +3,9 @@
 #include <fstream>
 #include "json.hpp"
 #include "Maths/Vector2.h"
+#include "Components/SquareCollider.h"
+#include "Components/ShapeRenderer.h"
+#include "Scene.h"
 
 using json = nlohmann::json;
 
@@ -57,16 +60,38 @@ public:
         return true;
     }
 
-    bool loadmap(const std::string& tileset) {
+    bool addCollider(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height, Scene& scene) {
+        for (unsigned int i = 0; i < width; ++i)
+            for (unsigned int j = 0; j < height; ++j)
+            {
+                int tileNumber = tiles[i + j * width] - 1;
+
+                if (tileNumber >= 0) {
+                    tileNumber = 0;
+                    GameObject* colliderobj = new GameObject;
+                    colliderobj->SetPosition(Maths::Vector2f(i * tileSize.x, j * tileSize.y));
+                    SquareCollider* collider = new SquareCollider;
+                    collider->SetWidth(tileSize.x);
+                    collider->SetHeight(tileSize.y);
+                    colliderobj->AddComponent(collider);
+                    scene.addCollider(collider);
+                    std::cout << "Added collision. Size: " << collider->GetWidth() << " ; " << collider->GetHeight() << std::endl;
+                }
+            }
+
+        return true;
+    }
+
+    bool loadmap(const std::string& tileset, Scene& scene) {
         std::ifstream mapf("assets/maps/" + tileset + ".json");
         json data = json::parse(mapf);
 
-        for (int i = 0; i < data["tilesets"].size(); i++) {
-            sf::Texture* newTileset = new sf::Texture;
-            std::string tilesetName = data["tilesets"][i]["name"];
-            newTileset->loadFromFile("assets/tilesets/" + tilesetName + ".png");
-            std::cout << "TILESET " + tilesetName + " LOADED SUCCESSFULLY." << std::endl;
-        }
+        //for (int i = 0; i < data["tilesets"].size(); i++) {
+        //    sf::Texture* newTileset = new sf::Texture;
+        //    std::string tilesetName = data["tilesets"][i]["name"];
+        //    newTileset->loadFromFile("assets/tilesets/" + tilesetName + ".png");
+        //    std::cout << "TILESET " + tilesetName + " LOADED SUCCESSFULLY." << std::endl;
+        //}
 
         for (int i = 0; i < data["layers"].size(); i++) {
             if (data["layers"][i]["type"] == "tilelayer") {
@@ -78,9 +103,14 @@ public:
 
                 m_size.SetXY(width * 16, height * 16);
 
-                load(tileSize, level, width, height);
-
-                std::cout << "LAYER " << data["layers"][i]["name"] << " LOADED SUCCESSFULLY." << std::endl;
+                if (data["layers"][i]["name"] != "Collision") {
+                    load(tileSize, level, width, height);
+                    std::cout << "LAYER " << data["layers"][i]["name"] << " LOADED SUCCESSFULLY." << std::endl;
+                }
+                else {
+                    addCollider(tileSize, level, width, height, scene);
+                    std::cout << "COLLISION LAYER " << data["layers"][i]["name"] << " LOADED SUCCESSFULLY." << std::endl;
+                }
             }
         }
 

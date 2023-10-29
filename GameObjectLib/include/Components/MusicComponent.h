@@ -6,7 +6,7 @@ class MusicComponent : public Component
 {
 public:
     MusicComponent(GameObject* owner);
-    ~MusicComponent();
+    ~MusicComponent() override;
 
     bool LoadMusic(const std::string& filePath);
     void Play(bool loop);

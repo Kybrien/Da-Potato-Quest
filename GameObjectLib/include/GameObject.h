@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -28,6 +29,17 @@ public:
 		component->SetOwner(this);
 		components.push_back(component);
 		return component;
+	}
+
+	template <typename T>
+	T* getComponent() {
+		for (auto& component : components) {
+			T* typedComponent = dynamic_cast<T*>(component);
+			if (typedComponent != nullptr) {
+				return typedComponent;
+			}
+		}
+		return nullptr; // Retourne nullptr si le composant n'est pas trouvé
 	}
 
 	void RemoveComponent(Component* _component);

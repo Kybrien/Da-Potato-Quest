@@ -30,6 +30,14 @@ void Scene::setCamera(sf::View newCamera) {
 	camera = newCamera;
 }
 
+void Scene::addCollider(SquareCollider* collider) {
+	colliders.push_back(collider);
+}
+
+std::vector<SquareCollider*> Scene::getColliders() {
+	return colliders;
+}
+
 GameObject* Scene::CreateGameObject(const std::string& _name)
 {
 	auto gameObject = new GameObject();
@@ -38,16 +46,17 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 	return gameObject;
 }
 
-GameObject* Scene::CreateDummyGameObject(const std::string& name, float position, const std::string texture)
+GameObject* Scene::CreateDummyGameObject(const std::string& name, float position, const std::string texture, float scale)
 {
 	GameObject* gameObject = CreateGameObject(name);
 	gameObject->SetPosition(Maths::Vector2f(position, position));
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
-	squareCollider->SetWidth(20.f);
-	squareCollider->SetHeight(20.f);
+	squareCollider->SetWidth(12.0f);
+	squareCollider->SetHeight(12.0f);
 
-	Sprite* sprite = new Sprite(texture);
+	Sprite* sprite = new Sprite(texture, scale);
+	sprite->setOldPosition(gameObject->GetPosition());
 	gameObject->AddComponent(sprite);
 
 	return gameObject;
