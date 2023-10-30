@@ -31,25 +31,13 @@ Scene Menu::MainMenu() {
 	background.setTexture(&backgroundTexture); // Appliquer la texture à la forme
 
 	// Créer le premier bouton à partir du coin supérieur droit de l'écran
-	GameObject* button1 = menu->CreateGameObject("bouton1");
-	button1->SetPosition(Maths::Vector2f(1500, 230));
-
-	Button* btncomponent1 = new Button("Bouton 1");
-	button1->AddComponent(btncomponent1);
+	GameObject* button1 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.25f, 0.1f), "JOUER");
 
 	// Créer le deuxième bouton en dessous du premier
-	GameObject* button2 = menu->CreateGameObject("bouton2");
-	button2->SetPosition(Maths::Vector2f(1500, 430));
-
-	Button* btncomponent2 = new Button("Bouton 2");
-	button2->AddComponent(btncomponent2);
+	GameObject* button2 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.5f), Maths::Vector2f(0.25f, 0.1f), "OPTIONS");
 
 	// Créer le troisième bouton en dessous du deuxième
-	GameObject* button3 = menu->CreateGameObject("bouton3");
-	button3->SetPosition(Maths::Vector2f(1500, 630));
-
-	Button* btncomponent3 = new Button("Bouton 3");
-	button3->AddComponent(btncomponent3);
+	GameObject* button3 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.7f), Maths::Vector2f(0.25f, 0.1f), "QUITTER");
 
 	while (open) {
 		menu->Update();
@@ -65,17 +53,17 @@ Scene Menu::MainMenu() {
 				sf::Vector2f mousePos = menuWindow->mapPixelToCoords(sf::Mouse::getPosition(*menuWindow));
 
 				// Vérifier si le bouton 1 est cliqué
-				if (btncomponent1->IsClicked(mousePos)) {
+				if (button1->getComponent<Button>()->IsClicked(mousePos)) {
 					Close();
 				}
 
 				// Vérifier si le bouton 2 est cliqué
-				else if (btncomponent2->IsClicked(mousePos)) {
+				else if (button2->getComponent<Button>()->IsClicked(mousePos)) {
 					// Faites quelque chose avec le bouton 2
 				}
 
 				// Vérifier si le bouton 3 est cliqué
-				else if (btncomponent3->IsClicked(mousePos)) {
+				else if (button3->getComponent<Button>()->IsClicked(mousePos)) {
 					menuWindow->close();
 					Close();
 					//quitte le programme

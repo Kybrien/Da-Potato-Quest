@@ -19,4 +19,6 @@ public:
 	void SetHeight(const float _height) { height = _height; }
 
 	static bool IsColliding(const SquareCollider& _colliderA, const SquareCollider& _colliderB);
+	static bool IsHColliding(const SquareCollider& _colliderA, const SquareCollider& _colliderB);
+	static bool IsVColliding(const SquareCollider& _colliderA, const SquareCollider& _colliderB);
 };

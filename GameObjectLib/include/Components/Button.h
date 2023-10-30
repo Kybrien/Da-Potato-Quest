@@ -6,7 +6,7 @@
 class Button : public Component
 {
 public:
-	Button(std::string text);
+	Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text);
 	~Button() override;
 
 	void Render(sf::RenderWindow* _window) override;

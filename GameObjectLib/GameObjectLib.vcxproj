@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="TileMap.cpp" />
     <ClInclude Include="include\Components\Button.h" />
     <ClInclude Include="include\Components\Menu.h" />
     <ClInclude Include="include\Components\ShapeRenderer.h" />

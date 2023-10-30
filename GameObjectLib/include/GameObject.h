@@ -19,6 +19,12 @@ public:
 
 	void SetName(const std::string& _name) { name = _name; }
 	void SetPosition(const Maths::Vector2<float>& _position) { position = _position; }
+	void SetSPosition(sf::RenderWindow* window, const Maths::Vector2<float>& _position) {
+		sf::Vector2u windowSize(window->getSize().x, window->getSize().y);
+
+		position.x = windowSize.x * _position.x;
+		position.y = windowSize.y * _position.y;
+	}
 
 	void AddComponent(Component* _component);
 

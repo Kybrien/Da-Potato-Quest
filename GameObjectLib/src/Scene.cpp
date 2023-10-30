@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Scene.h"
 
 #include <SFML/Graphics.hpp>
@@ -5,12 +7,35 @@
 
 #include "Components/Sprite.h"
 #include "Components/SquareCollider.h"
+#include "Components/Button.h"
 
 void Scene::Update()
 {
 	for (GameObject* const& gameObject : gameObjects)
 	{
 		gameObject->Update();
+	}
+
+	if (player) {
+		auto playerSprite = player->getComponent<Sprite>();
+		auto playerCollider = player->getComponent<SquareCollider>();
+
+		for (int i = 0; i < colliders.size(); i++) {
+			if (SquareCollider::IsColliding(*playerCollider, *colliders[i])) {
+				// Gérer les collisions horizontales et verticales séparément
+				float deltaX = playerCollider->GetOwner()->GetPosition().x - colliders[i]->GetOwner()->GetPosition().x;
+				float deltaY = playerCollider->GetOwner()->GetPosition().y - colliders[i]->GetOwner()->GetPosition().y;
+
+				if (abs(deltaX) > abs(deltaY)) {
+					// Collision horizontale
+					playerSprite->moveBack(0);
+				}
+				else {
+					// Collision verticale
+					playerSprite->moveBack(1);
+				}
+			}
+		}
 	}
 }
 
@@ -20,6 +45,14 @@ void Scene::Render(sf::RenderWindow* _window)
 	{
 		gameObject->Render(_window);
 	}
+}
+
+GameObject* Scene::getPlayer() {
+	return player;
+}
+
+void Scene::setPlayer(GameObject* Player) {
+	player = Player;
 }
 
 sf::View Scene::getGamera() {
@@ -58,6 +91,16 @@ GameObject* Scene::CreateDummyGameObject(const std::string& name, float position
 	Sprite* sprite = new Sprite(texture, scale);
 	sprite->setOldPosition(gameObject->GetPosition());
 	gameObject->AddComponent(sprite);
+
+	return gameObject;
+}
+
+GameObject* Scene::CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text) {
+	GameObject* gameObject = CreateGameObject("Button");
+	gameObject->SetSPosition(window, position);
+
+	Button* button = new Button(window, size, text);
+	gameObject->AddComponent(button);
 
 	return gameObject;
 }

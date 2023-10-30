@@ -16,8 +16,19 @@ Sprite::~Sprite()
 	sprite = nullptr;
 }
 
-void Sprite::moveLeft() {
-
+void Sprite::moveBack(int direction) {
+	if (GetOwner()) {
+		switch (direction) {
+		case 0:
+			GetOwner()->SetPosition(Maths::Vector2f(oldPosition.x, GetOwner()->GetPosition().y));
+			break;
+		case 1:
+			GetOwner()->SetPosition(Maths::Vector2f(GetOwner()->GetPosition().x, oldPosition.y));
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void Sprite::setOldPosition(Maths::Vector2f position) {

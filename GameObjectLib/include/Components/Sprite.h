@@ -14,6 +14,8 @@ public:
 	void moveUp();
 	void moveDown();
 
+	void moveBack(int direction);
+
 	void setOldPosition(Maths::Vector2f position);
 	Maths::Vector2f getOldPosition();
 	float getOldXPosition();

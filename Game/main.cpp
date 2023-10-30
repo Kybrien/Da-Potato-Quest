@@ -14,36 +14,26 @@
 void ProcessInput(GameObject* player, float dt, Scene scene)
 {
 	auto playerSprite = player->getComponent<Sprite>();
+	playerSprite->setOldPosition(player->GetPosition());
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		playerSprite->setOldPosition(player->GetPosition());
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(1, 0) * dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
-		playerSprite->setOldPosition(player->GetPosition());
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(-1, 0) * dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		playerSprite->setOldPosition(player->GetPosition());
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, -1) * dt);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		playerSprite->setOldPosition(player->GetPosition());
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt);
-	}
-
-	for (int i = 0; i < scene.getColliders().size(); i++) {
-		if (SquareCollider::IsColliding(*player->getComponent<SquareCollider>(), *scene.getColliders()[i])) {
-			player->SetPosition(playerSprite->getOldPosition());
-			std::cout << "Colliding !!" << std::endl;
-		}
 	}
 }
 
 void HandleCamera(sf::RenderWindow* window, sf::View camera, GameObject* player, TileMap map) {
 	sf::Vector2f playerPosition = sf::Vector2f(player->GetPosition().x, player->GetPosition().y);
 
-	sf::Vector2f windowSize(window->getSize().x, window->getSize().y);
+	sf::Vector2u windowSize(window->getSize().x, window->getSize().y);
 
 	sf::Vector2f cameraSize = camera.getSize();
 
@@ -80,15 +70,19 @@ int main()
 {
 	Scene scene;
 
-	GameObject* player = scene.CreateDummyGameObject("Player", 200.f, "potato.png", 0.015);
+	GameObject* player = scene.CreateDummyGameObject("Player", 200.f, "potato.png", 0.015f);
 
-	//GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png", 0.02);
+	scene.setPlayer(player);
 
-	auto window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "SFML Engine");
+	//GameObject* enemy = scene.CreateDummyGameObject("Enemy", 400.f, "potato.png", 0.02f);
 
-	MusicComponent music(nullptr);
-	music.LoadMusic("music.ogg");
-	music.Play(true);
+	auto window = new sf::RenderWindow(sf::VideoMode(800, 600), "DA POOTATO QUEST", sf::Style::Default);
+	//window->setVerticalSyncEnabled(true);
+	window->setFramerateLimit(60);
+
+	//MusicComponent music(nullptr);
+	//music.LoadMusic("music.ogg");
+	//music.Play(true);
 
 	Menu menu(window);
 	menu.MainMenu();
@@ -96,13 +90,13 @@ int main()
 	TileMap map;
 	map.loadmap("Lvl01", scene);
 
-	scene.setCamera(CreateCamera(window, 8));
+	scene.setCamera(CreateCamera(window, 5));
 
 	sf::Clock clock;
 	sf::Time time;
 
 	float dt = 0;
-	const int speed = 60;
+	const int speed = 50;
 
 	while (window->isOpen())
 	{
