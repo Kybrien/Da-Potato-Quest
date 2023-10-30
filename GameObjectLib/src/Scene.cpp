@@ -55,7 +55,7 @@ void Scene::setPlayer(GameObject* Player) {
 	player = Player;
 }
 
-sf::View Scene::getGamera() {
+sf::View Scene::getGamera(){
 	return camera;
 }
 

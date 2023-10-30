@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Menu.h"
 
+
 void ProcessInput(GameObject* player, float dt, Scene scene)
 {
 	auto playerSprite = player->getComponent<Sprite>();
@@ -27,6 +28,12 @@ void ProcessInput(GameObject* player, float dt, Scene scene)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		auto window = new sf::RenderWindow(sf::VideoMode(800, 600), "DA POOTATO QUEST", sf::Style::Default);
+		window->setFramerateLimit(60);
+		Menu menu(window);
+		menu.MainMenu();
 	}
 }
 
@@ -66,6 +73,9 @@ sf::View CreateCamera(sf::RenderWindow* window, float zoom) {
 	return camera;
 }
 
+bool isGamePaused = false;
+bool isMenuActive = false;
+
 int main()
 {
 	Scene scene;
@@ -98,6 +108,8 @@ int main()
 	float dt = 0;
 	const int speed = 50;
 
+	sf::View camera = scene.getCamera(); // Obtenir la vue de la caméra depuis la classe Scene
+
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -105,18 +117,39 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window->close();
+
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					// Mettre en pause ou reprendre le jeu
+					isGamePaused = !isGamePaused;
+					isMenuActive = isGamePaused; // Activer le menu si le jeu est en pause
+				}
+			}
 		}
 
-		time = clock.restart();
-		dt = time.asSeconds();
+		if (!isGamePaused)
+		{
+			// Mettre à jour le jeu uniquement si le jeu n'est pas en pause
+			time = clock.restart();
+			dt = time.asSeconds();
+			ProcessInput(player, dt * speed, scene);
+			scene.Update();
+			HandleCamera(window, camera, player, map);
+		}
 
-		ProcessInput(player, dt * speed, scene);
-
-		scene.Update();
-		HandleCamera(window, scene.getGamera(), player, map);
 		window->clear(sf::Color::Black);
 		window->draw(map);
 		scene.Render(window);
+
+		// Afficher le menu pause si le jeu est en pause
+		if (isMenuActive)
+		{
+			// Dessiner votre menu pause ici
+			// ...
+		}
+
 		window->display();
 	}
 
