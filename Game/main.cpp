@@ -108,7 +108,7 @@ int main()
 	float dt = 0;
 	const int speed = 50;
 
-	sf::View camera = scene.getCamera(); // Obtenir la vue de la caméra depuis la classe Scene
+	//sf::View camera = scene.getCamera(); // Obtenir la vue de la caméra depuis la classe Scene
 
 	while (window->isOpen())
 	{
@@ -136,7 +136,7 @@ int main()
 			dt = time.asSeconds();
 			ProcessInput(player, dt * speed, scene);
 			scene.Update();
-			HandleCamera(window, camera, player, map);
+			//HandleCamera(window, camera, player, map);
 		}
 
 		window->clear(sf::Color::Black);
