@@ -72,6 +72,12 @@ sf::View CreateCamera(sf::RenderWindow* window, float zoom) {
 	window->setView(camera);
 	return camera;
 }
+enum class GameState {
+	Playing,
+	Paused,
+	MainMenu,
+	// ... autres états de jeu
+};
 
 bool isGamePaused = false;
 bool isMenuActive = false;
@@ -113,8 +119,7 @@ int main()
 	while (window->isOpen())
 	{
 		sf::Event event;
-		while (window->pollEvent(event))
-		{
+		while (window->pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window->close();
 
@@ -153,6 +158,7 @@ int main()
 		window->display();
 	}
 
+	// ... (votre code pour la fermeture de la fenêtre, la libération de la mémoire, etc.)
 
 	return 0;
 }

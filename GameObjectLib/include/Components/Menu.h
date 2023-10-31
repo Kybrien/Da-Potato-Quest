@@ -22,5 +22,7 @@ private:
 	Scene* menu = nullptr;
 	sf::RenderWindow* menuWindow;
 	bool open = true;
+	bool isGamePaused = false;  // Déclaration de la variable pour indiquer si le jeu est en pause
+	bool isMenuActive = false;  // Déclaration de la variable pour indiquer si le menu est actif
 };
 

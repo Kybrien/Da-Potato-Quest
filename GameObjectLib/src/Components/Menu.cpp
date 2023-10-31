@@ -4,6 +4,7 @@
 #include "Components/Menu.h"
 #include "Components/Button.h"
 #include "GameObject.h"
+#include <string>
 
 Menu::Menu(sf::RenderWindow* _window) {
 	menuWindow = _window;
@@ -49,6 +50,17 @@ Scene Menu::MainMenu() {
 				Close();
 			}
 
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Escape) {
+					// Mettre en pause ou reprendre le jeu
+					isGamePaused = !isGamePaused;
+					isMenuActive = isGamePaused; // Activer le menu si le jeu est en pause
+				}
+			}
+		}
+
+
+		if (!isGamePaused){
 			if (event.type == sf::Event::MouseButtonPressed) {
 				sf::Vector2f mousePos = menuWindow->mapPixelToCoords(sf::Mouse::getPosition(*menuWindow));
 
@@ -56,17 +68,11 @@ Scene Menu::MainMenu() {
 				if (button1->getComponent<Button>()->IsClicked(mousePos)) {
 					Close();
 				}
-
-				// Vérifier si le bouton 2 est cliqué
-				else if (button2->getComponent<Button>()->IsClicked(mousePos)) {
-					// Faites quelque chose avec le bouton 2
+				if (button2->getComponent<Button>()->IsClicked(mousePos)) {
+					//Options
 				}
-
-				// Vérifier si le bouton 3 est cliqué
-				else if (button3->getComponent<Button>()->IsClicked(mousePos)) {
-					menuWindow->close();
+				if (button3->getComponent<Button>()->IsClicked(mousePos)) {
 					Close();
-					//quitte le programme
 				}
 			}
 		}
@@ -75,9 +81,40 @@ Scene Menu::MainMenu() {
 		menuWindow->clear();
 		menuWindow->draw(background);
 
-		menu->Render(menuWindow);
+		// Afficher le menu pause si le jeu est en pause
+		if (isMenuActive) {
+			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2f mousePos = menuWindow->mapPixelToCoords(sf::Mouse::getPosition(*menuWindow));
+
+				// Vérifier si le bouton 1 est cliqué
+				if (button1->getComponent<Button>()->IsClicked(mousePos)) {
+					Close();
+					isGamePaused = !isGamePaused;
+				}
+				if (button2->getComponent<Button>()->IsClicked(mousePos)) {
+					//Options
+				}
+				if (button3->getComponent<Button>()->IsClicked(mousePos)) {
+					Close();
+				}
+			}
+			sf::Texture backgroundTexture;
+			if (!backgroundTexture.loadFromFile("assets/images/background.png")) {
+				// Gérer l'erreur si le chargement échoue
+			}
+
+			// Créer le rectangle de fond (background) avec la texture chargée
+			sf::RectangleShape background(sf::Vector2f(menuWindow->getSize().x, menuWindow->getSize().y));
+			background.setTexture(&backgroundTexture); // Appliquer la texture à la forme
+
+		}
+		else {
+			menu->Render(menuWindow);
+		}
+
 		menuWindow->display();
 	}
 
 	return *menu;
 }
+
