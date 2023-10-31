@@ -24,3 +24,27 @@ void MusicComponent::Stop()
 {
     music.stop();
 }
+
+void MusicComponent::SetVolume(int Vol) {
+    music.setVolume(Vol);
+}
+
+void MusicComponent::VolumePlus()
+{
+    if (MusicVolume != 100) {
+        MusicVolume += 10;
+        SetVolume(MusicVolume);
+    }
+}
+
+void MusicComponent::VolumeMoins()
+{
+    if (MusicVolume != 0) {
+        MusicVolume -= 10;
+        SetVolume(MusicVolume);
+    }
+}
+
+int MusicComponent::GetVolume() {
+    return MusicVolume;
+}

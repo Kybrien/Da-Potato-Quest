@@ -80,7 +80,7 @@
     <ClCompile Include="src\Components\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MusicComponent.cpp">
+    <ClCompile Include="src\Components\MusicComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">

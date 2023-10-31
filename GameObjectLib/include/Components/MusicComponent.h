@@ -12,7 +12,12 @@ public:
     void Play(bool loop);
     void Pause();
     void Stop();
-
+    void SetVolume(int Vol);
+    void VolumePlus();
+    void VolumeMoins();
+    int GetVolume();
+                      
 private:
     sf::Music music;
+    int MusicVolume = 100;
 };
