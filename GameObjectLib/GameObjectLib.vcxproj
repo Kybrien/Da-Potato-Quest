@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\SaveComponent.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClInclude Include="include\Components\Button.h" />
     <ClInclude Include="include\Components\Menu.h" />
+    <ClInclude Include="include\Components\SaveComponent.h" />
     <ClInclude Include="include\Components\ShapeRenderer.h" />
     <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />

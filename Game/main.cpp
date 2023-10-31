@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "Components/Sprite.h"
 #include "Components/MusicComponent.h"
+#include "Components/SaveComponent.h"
 #include "Scene.h"
 #include "Menu.h"
 
@@ -84,6 +85,9 @@ int main()
 	//music.LoadMusic("music.ogg");
 	//music.Play(true);
 
+	SaveComponent save(nullptr);
+	save.LoadSave(player);
+
 	Menu menu(window);
 	menu.MainMenu();
 
@@ -119,6 +123,7 @@ int main()
 		scene.Render(window);
 		window->display();
 	}
+	save.Save(player);
 
 
 	return 0;
