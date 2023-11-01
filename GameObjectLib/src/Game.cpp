@@ -4,6 +4,7 @@
 #include "Components/SaveComponent.h"
 #include "Components/Menu.h"
 #include "Components/Sprite.h"
+#include "Components/Button.h"
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -64,6 +65,7 @@ void Game::Init() {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "DA POOTATO QUEST", sf::Style::Default);
 	//window->setVerticalSyncEnabled(true);
 	window->setFramerateLimit(60);
+	window->setKeyRepeatEnabled(false);
 
 	player = scene.CreateDummyGameObject("Player", 200.f, "potato.png", 0.015f);
 	scene.setPlayer(player);
@@ -71,7 +73,8 @@ void Game::Init() {
 
 void Game::Run() {
 	Menu menu(window);
-	menu.CreateMenu();
+	menu.Init();
+	menu.CreateMainMenu();
 
 	std::cout << "GAME STARTED" << std::endl;
 
@@ -112,25 +115,34 @@ void Game::Run() {
 			if (event.type == sf::Event::Closed)
 				window->close();
 
+			if (event.type == (sf::Event::KeyPressed)) {
+				if (event.key.code == sf::Keyboard::Escape) {
+					std::cout << "escape pressed";
+					gameState == PLAYING ? gameState = PAUSE : gameState = PLAYING;
+				}
+			}
+
 			if (event.type == sf::Event::MouseButtonPressed) {
-				//sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+				if (gameState == MAIN_MENU) {
+					sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 
-				//// Vérifier si le bouton 1 est cliqué
-				//if (button1->getComponent<Button>()->IsClicked(mousePos)) {
-				//	Close();
-				//}
+					// Vérifier si le bouton 1 est cliqué
+					menu.GetButtons();
+					if (menu.GetButtons()[0]->getComponent<Button>()->IsClicked(mousePos)) {
+						gameState = PLAYING;
+					}
 
-				//// Vérifier si le bouton 2 est cliqué
-				//else if (button2->getComponent<Button>()->IsClicked(mousePos)) {
-				//	// Faites quelque chose avec le bouton 2
-				//}
+					// Vérifier si le bouton 2 est cliqué
+					else if (menu.GetButtons()[1]->getComponent<Button>()->IsClicked(mousePos)) {
+						// Faites quelque chose avec le bouton 2
+					}
 
-				//// Vérifier si le bouton 3 est cliqué
-				//else if (button3->getComponent<Button>()->IsClicked(mousePos)) {
-				//	menuWindow->close();
-				//	Close();
-				//	//quitte le programme
-				//}
+					// Vérifier si le bouton 3 est cliqué
+					else if (menu.GetButtons()[2]->getComponent<Button>()->IsClicked(mousePos)) {
+						window->close();
+						//quitte le programme
+					}
+				}
 			}
 		}
 

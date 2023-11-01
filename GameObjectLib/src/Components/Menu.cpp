@@ -17,7 +17,7 @@ void Menu::Close() {
 	open = false;
 }
 
-Scene Menu::CreateMenu() {
+Scene Menu::Init() {
 	menu = new Scene;
 	background = new sf::Texture;
 	// Charger la texture de l'arrière-plan
@@ -74,7 +74,7 @@ Scene Menu::CreateMenu() {
 	return *menu;
 }
 
-void Menu::RenderMainMenu() {
+void Menu::CreateMainMenu() {
 	// Créer le rectangle de fond (background) avec la texture chargée
 	sf::RectangleShape backgroundShape(sf::Vector2f(menuWindow->getSize().x, menuWindow->getSize().y));
 	backgroundShape.setTexture(background); // Appliquer la texture à la forme
@@ -87,6 +87,10 @@ void Menu::RenderMainMenu() {
 
 	// Créer le troisième bouton en dessous du deuxième
 	GameObject* button3 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.7f), Maths::Vector2f(0.25f, 0.1f), "QUITTER");
+
+	buttons.push_back(button1);
+	buttons.push_back(button2);
+	buttons.push_back(button3);
 }
 
 void Menu::RenderMenu() {

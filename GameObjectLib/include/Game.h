@@ -18,7 +18,6 @@ private:
 	sf::RenderWindow* window = nullptr;
 	Scene scene;
 	GameObject* player = nullptr;
-	std::vector<Button*> buttons;
 	bool isPaused = false;
 	int gameState = 0; //0 = Main Menu; 1 = Playing; 2 = Pause
 };

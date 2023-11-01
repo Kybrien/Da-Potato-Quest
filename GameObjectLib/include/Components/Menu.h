@@ -9,21 +9,23 @@ public:
 	Menu(sf::RenderWindow* _window);
 	~Menu();
 
-	Scene CreateMenu();
+	Scene Init();
 
-	void RenderMainMenu();
+	void CreateMainMenu();
 
 	void Close();
+	
+	std::vector<GameObject*> GetButtons() { return buttons; }
 
 	void RenderMenu();
-	void MoveUp();
-	void MoveDown();
-	void IsClicked(const sf::Vector2f& mousePos);
+	//void MoveUp();
+	//void MoveDown();
 
 private:
 	sf::RenderWindow* menuWindow = nullptr;
 	Scene* menu = nullptr;
 	sf::Texture* background = nullptr;
+	std::vector<GameObject*> buttons;
 	bool open = true;
 };
 
