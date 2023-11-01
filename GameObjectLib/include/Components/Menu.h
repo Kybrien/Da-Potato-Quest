@@ -9,18 +9,21 @@ public:
 	Menu(sf::RenderWindow* _window);
 	~Menu();
 
-	Scene MainMenu();
+	Scene CreateMenu();
+
+	void RenderMainMenu();
 
 	void Close();
 
-	void draw(sf::RenderWindow& window);
+	void RenderMenu();
 	void MoveUp();
 	void MoveDown();
 	void IsClicked(const sf::Vector2f& mousePos);
 
 private:
+	sf::RenderWindow* menuWindow = nullptr;
 	Scene* menu = nullptr;
-	sf::RenderWindow* menuWindow;
+	sf::Texture* background = nullptr;
 	bool open = true;
 };
 

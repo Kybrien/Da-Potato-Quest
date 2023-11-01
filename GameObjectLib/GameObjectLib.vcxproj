@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SaveComponent.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClInclude Include="include\Components\Button.h" />
     <ClInclude Include="include\Components\Menu.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Components\SquareCollider.h" />
     <ClInclude Include="include\Components\Component.h" />
+    <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\json.hpp" />
     <ClInclude Include="include\Scene.h" />
