@@ -28,7 +28,7 @@ public:
 
 	GameObject* CreateWeaponGameObject(sf::RenderWindow* window, const std::string& _name, GameObject* player, int damage);
 
-	GameObject* CreateDummyGameObject(const std::string& name, float position, const std::string texture, float scale);
+	GameObject* CreateDummyGameObject(const std::string& name, float position, const std::string texture, int maxHealth, float scale);
 
 	GameObject* CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text, sf::Color color);
 

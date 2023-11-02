@@ -14,7 +14,8 @@ void Scene::Update()
 {
 	for (GameObject* const& gameObject : gameObjects)
 	{
-		gameObject->Update();
+		if (gameObject != nullptr)
+			gameObject->Update();
 	}
 
 	if (player) {
@@ -44,7 +45,7 @@ void Scene::Render(sf::RenderWindow* _window)
 {
 	for (GameObject* const& gameObject : gameObjects)
 	{
-		if (gameObject->isActive()) {
+		if (gameObject->isActive() && gameObject != nullptr) {
 			gameObject->Render(_window);
 		}
 	}
@@ -88,7 +89,7 @@ GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::s
 	gameObject->SetName(_name);
 	gameObjects.push_back(gameObject);
 
-	Sprite* sprite = new Sprite("weapon.png", 0.01);
+	Sprite* sprite = new Sprite("weapon", 0, 0.01);
 	sprite->setOldPosition(gameObject->GetPosition());
 	gameObject->AddComponent(sprite);
 
@@ -102,7 +103,7 @@ GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::s
 	return gameObject;
 }
 
-GameObject* Scene::CreateDummyGameObject(const std::string& name, float position, const std::string texture, float scale)
+GameObject* Scene::CreateDummyGameObject(const std::string& name, float position, const std::string texture, int maxHealth, float scale)
 {
 	GameObject* gameObject = CreateGameObject(name);
 	gameObject->SetPosition(Maths::Vector2f(position, position));
@@ -111,7 +112,7 @@ GameObject* Scene::CreateDummyGameObject(const std::string& name, float position
 	squareCollider->SetWidth(12.0f);
 	squareCollider->SetHeight(12.0f);
 
-	Sprite* sprite = new Sprite(texture, scale);
+	Sprite* sprite = new Sprite(texture, maxHealth, scale);
 	sprite->setOldPosition(gameObject->GetPosition());
 	sprite->getSprite()->setTextureRect(sf::IntRect(sprite->getAnimation().x * 32, sprite->getAnimation().y * 32, 32, 32));
 	gameObject->AddComponent(sprite);

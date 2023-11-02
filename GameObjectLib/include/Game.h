@@ -12,6 +12,8 @@ public:
 	void Run();
 
 	void ProcessInput(GameObject* player, float dt, Scene scene);
+	void FollowPlayer(GameObject* ennemie, float dt, Scene scene);
+
 	void HandleCamera(sf::View camera, GameObject* player, TileMap map);
 	sf::View CreateCamera(float zoom);
 private:
@@ -19,6 +21,7 @@ private:
 	Scene scene;
 	GameObject* player = nullptr;
 	GameObject* weapon = nullptr;
+	std::vector<GameObject*> enemies;
 	bool isPaused = false;
 	int gameState = 0; //0 = Main Menu; 1 = Playing; 2 = Pause
 };

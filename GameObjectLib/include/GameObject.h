@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
@@ -12,7 +13,12 @@ class GameObject
 {
 public:
 	GameObject() = default;
-	virtual ~GameObject() = default;
+	~GameObject() {
+		std::cout << "DELETE";
+		for (auto& component : components) {
+			delete component;
+		}
+	};
 
 	std::string GetName() const { return name; }
 	Maths::Vector2<float> GetPosition() const { return position; }

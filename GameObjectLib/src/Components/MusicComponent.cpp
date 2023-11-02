@@ -4,6 +4,11 @@ MusicComponent::MusicComponent(GameObject* owner) : Component(owner) {}
 
 MusicComponent::~MusicComponent() {}
 
+bool MusicComponent::LoadSound(const std::string& filePath)
+{
+    return music.openFromFile("assets/sounds/" + filePath);
+}
+
 bool MusicComponent::LoadMusic(const std::string& filePath)
 {
     return music.openFromFile("assets/music/" + filePath);

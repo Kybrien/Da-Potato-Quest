@@ -6,7 +6,7 @@
 class Sprite : public Component
 {
 public:
-	Sprite(std::string texture, float scale);
+	Sprite(std::string texture, int maxHealth, float scale);
 	~Sprite() override;
 
 	enum Direction {DOWN,UP,RIGHT,LEFT};
@@ -32,12 +32,29 @@ public:
 	float getOldXPosition();
 	float getOldYPosition();
 
+
+	int getMaxHealth() { return maxHealth; }
+	int getCurrentHealth() { return currHealth; }
+
+	void setCurrentHealth(int health) { currHealth = health; }
+
+	void Attack();
+	void Kill();
+	void incrementCount() { if (!isAttacking) count++; }
+
+	void setAttacking(bool attacking) { isAttacking = attacking; }
+	bool getAttacking() { return isAttacking; }
+
 	void Update() override;
 	void Render(sf::RenderWindow* _window) override;
 
 private:
 	sf::Texture texture;
+	sf::Texture attackTexture;
 	sf::Sprite* sprite = nullptr;
 	sf::Vector2i Animation = sf::Vector2i (1, DOWN);
 	Maths::Vector2f oldPosition;
+	int maxHealth;
+	int currHealth;
+	bool isAttacking = false;
 };

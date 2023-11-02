@@ -6,6 +6,7 @@
 #include "Components/Sprite.h"
 #include "Components/Button.h"
 #include "Components/HealthBar.h"
+#include "Components/MusicComponent.h"
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -15,22 +16,51 @@ void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(1, 0) * dt);
 		playerSprite->setAnimation(2);
-		playerSprite->count++;
+		playerSprite->incrementCount();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(-1, 0) * dt);
 		playerSprite->setAnimation(3);
-		playerSprite->count++;
+		playerSprite->incrementCount();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, -1) * dt);
 		playerSprite->setAnimation(1);
-		playerSprite->count++;
+		playerSprite->incrementCount();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt);
 		playerSprite->setAnimation(0);
-		playerSprite->count++;
+		playerSprite->incrementCount();
+	}
+}
+
+void Game::FollowPlayer(GameObject* enemy, float dt, Scene scene)
+{
+	auto EnemySprite = enemy->getComponent<Sprite>();
+	EnemySprite->setOldPosition(enemy->GetPosition());
+
+	int distX = player->GetPosition().GetX() - enemy->GetPosition().GetX();
+	int distY = player->GetPosition().GetY() - enemy->GetPosition().GetY();
+	if (distX < 0) {
+		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(-10, 0) * dt);
+		EnemySprite->setAnimation(3);
+		EnemySprite->count++;
+	}
+	else if (distX > 0) {
+		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(+10, 0) * dt);
+		EnemySprite->setAnimation(2);
+		EnemySprite->count++;
+	}
+	if (distY < 0) {
+		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(0, -10) * dt);
+		EnemySprite->setAnimation(1);
+		EnemySprite->count++;
+	}
+	else if (distY > 0) {
+		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(0, +10) * dt);
+		EnemySprite->setAnimation(0);
+		EnemySprite->count++;
 	}
 }
 
@@ -83,12 +113,24 @@ void Game::Init() {
 	//animation.x++;
 	//if (animation.x * 32 >= perso.getSize().x)
 
-	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.5f);
+	player = scene.CreateDummyGameObject("Player", 200.f, "potato", 3, 0.5f);
 	weapon = scene.CreateWeaponGameObject(window, "Weapon", player, 1);
 
-	HealthBar* hb = new HealthBar(player, 3);
+	HealthBar* hb = new HealthBar(player);
 	GameObject* healthBar = scene.CreateGameObject("healthBar");
 	healthBar->AddComponent(hb);
+
+	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "potato", 1, 0.5f));
+	Maths::Vector2<float> pos(950.0f, 380.0f);
+	enemies[0]->SetPosition(pos);
+
+	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "potato", 1, 0.5f));
+	Maths::Vector2<float> pos1(700.0f, 500.0f);
+	enemies[1]->SetPosition(pos1);
+
+	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "potato", 1, 0.5f));
+	Maths::Vector2<float> pos2(600.0f, 400.0f);
+	enemies[2]->SetPosition(pos2);
 
 	scene.setPlayer(player);
 }
@@ -105,6 +147,9 @@ void Game::Run() {
 	//music.LoadMusic("music.ogg");
 	//music.Play(true);
 
+	MusicComponent deathSound(nullptr);
+	deathSound.LoadSound("death.ogg");
+
 	TileMap map;
 	map.loadmap("Lvl01", scene);
 
@@ -117,8 +162,6 @@ void Game::Run() {
 	float dt = 0;
 	const int speed = 50;
 
-	std::cout << gameState;
-
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -129,12 +172,11 @@ void Game::Run() {
 
 			if (event.type == (sf::Event::KeyPressed)) {
 				if (event.key.code == sf::Keyboard::Escape) {
-					std::cout << "escape pressed";
 					if (gameState == PLAYING) {
 						gameState = PAUSE;
 						menu.PauseMenu();
 					}
-					else {
+					else if (gameState == PAUSE) {
 						gameState = PLAYING;
 						menu.Close();
 					}
@@ -159,6 +201,30 @@ void Game::Run() {
 					else if (menu.GetButtons()[2]->getComponent<Button>()->IsClicked(mousePos)) {
 						window->close();
 						//quitte le programme
+					}
+				}
+				if (gameState == PLAYING) {
+					Sprite* playerSprite = player->getComponent<Sprite>();
+					Maths::Vector2f mouseWorldPos = Maths::Vector2f(player->GetPosition().x - 8 + mousePos.x, player->GetPosition().y - 8 + mousePos.y);
+					float distance = player->GetPosition().Distance(mouseWorldPos);
+					if (distance <= 25 && playerSprite->getAttacking() == false) {
+						std::cout << "Attack" << std::endl;
+						playerSprite->Attack();
+						weapon->SetPosition(Maths::Vector2f(mouseWorldPos.x + 4, mouseWorldPos.y + 4));
+						for (int i = 0; i < enemies.size(); i++) {
+							GameObject* currEnemy = enemies[i];
+							if (SquareCollider::IsColliding(*currEnemy->getComponent<SquareCollider>(), *weapon->getComponent<SquareCollider>())) {
+								currEnemy->getComponent<Sprite>()->setCurrentHealth(currEnemy->getComponent<Sprite>()->getCurrentHealth() - 1);
+								if (currEnemy->getComponent<Sprite>()->getCurrentHealth() == 0) {
+									std::cout << "Dead";
+									deathSound.Play(false);
+									currEnemy->getComponent<Sprite>()->Kill();
+									enemies[i] = nullptr;
+								}
+							}
+						}
+
+						enemies.erase(std::remove(enemies.begin(), enemies.end(), nullptr), enemies.end());
 					}
 				}
 				if (gameState == PAUSE) {
@@ -188,6 +254,9 @@ void Game::Run() {
 		}
 		if (gameState == PLAYING) {
 			ProcessInput(player, dt * speed, scene);
+			for (int i = 0; i < enemies.size(); i++) {
+				FollowPlayer(enemies[i], dt, scene);
+			}
 
 			scene.setCamera(CreateCamera(5));
 
@@ -196,6 +265,7 @@ void Game::Run() {
 			window->clear(sf::Color::Black);
 			window->draw(map);
 			scene.Render(window);
+			window->setView(scene.getCamera());
 			window->display();
 		}
 		if (gameState == PAUSE) {

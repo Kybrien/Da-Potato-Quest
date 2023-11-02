@@ -4,7 +4,7 @@
 
 class HealthBar : public Component {
 public:
-    HealthBar(GameObject* Character, int maxHealth);
+    HealthBar(GameObject* Character);
     void SetHealth(int health);
     void LoseHeart();
     void Render(sf::RenderWindow* window) override;
@@ -12,8 +12,6 @@ public:
 
 private:
     GameObject* Character = nullptr;
-    int maxHealth;
-    int currentHealth;
     sf::Texture* heartTexture = nullptr;
     sf::Sprite* heartSprite = nullptr;
 };

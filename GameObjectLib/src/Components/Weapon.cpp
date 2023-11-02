@@ -19,7 +19,7 @@ Weapon::~Weapon()
 
 void Weapon::Update() 
 {
-	owner->SetPosition(character->GetPosition());
+	//owner->SetPosition(character->GetPosition());
 }
 
 void Weapon::Render(sf::RenderWindow* _window)

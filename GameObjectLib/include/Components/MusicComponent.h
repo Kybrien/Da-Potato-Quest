@@ -8,6 +8,7 @@ public:
     MusicComponent(GameObject* owner);
     ~MusicComponent() override;
 
+    bool LoadSound(const std::string& filePath);
     bool LoadMusic(const std::string& filePath);
     void Play(bool loop);
     void Pause();
