@@ -18,5 +18,45 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\sprites\potato.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\sprites\Sprite_potato.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilesets\collisions.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilesets\tileset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="openal32.dll" />
+    <None Include="assets\music\music.ogg" />
+    <None Include="assets\maps\Lvl01.json" />
+    <None Include="assets\maps\PotatoV1.json" />
+    <None Include="assets\maps\PotatoV1.tmx" />
+    <None Include="assets\maps\test.json" />
+    <None Include="assets\maps\test2.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\save\Save(DontModifyItLittleCheater).txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\alagard.ttf" />
+    <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\arialbd.ttf" />
+    <Font Include="assets\fonts\arialbi.ttf" />
+    <Font Include="assets\fonts\ariali.ttf" />
+    <Font Include="assets\fonts\ariblk.ttf" />
   </ItemGroup>
 </Project>

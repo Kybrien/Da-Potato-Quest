@@ -67,7 +67,14 @@ void Game::Init() {
 	window->setFramerateLimit(60);
 	window->setKeyRepeatEnabled(false);
 
-	player = scene.CreateDummyGameObject("Player", 200.f, "potato.png", 0.015f);
+	//sf::Texture perso;
+	//sf::Sprite sprite_perso;
+	//enum Dir { Up, Down, Right, Left };
+	//sf::Vector2i animation(1, Down);
+	//animation.x++;
+	//if (animation.x * 32 >= perso.getSize().x)
+
+	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.015f);
 	scene.setPlayer(player);
 }
 

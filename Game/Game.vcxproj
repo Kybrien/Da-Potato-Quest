@@ -156,12 +156,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameObjectLib\GameObjectLib.vcxproj">
       <Project>{fae7003c-61cf-41e6-9b58-70e97d3f7878}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\background.png" />
+    <Image Include="assets\sprites\potato.png" />
+    <Image Include="assets\sprites\Sprite_potato.png" />
+    <Image Include="assets\tilesets\collisions.png" />
+    <Image Include="assets\tilesets\tileset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\maps\Lvl01.json" />
+    <None Include="assets\maps\PotatoV1.json" />
+    <None Include="assets\maps\PotatoV1.tmx" />
+    <None Include="assets\maps\test.json" />
+    <None Include="assets\maps\test2.json" />
+    <None Include="assets\music\music.ogg" />
+    <None Include="openal32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\save\Save(DontModifyItLittleCheater).txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\alagard.ttf" />
+    <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\arialbd.ttf" />
+    <Font Include="assets\fonts\arialbi.ttf" />
+    <Font Include="assets\fonts\ariali.ttf" />
+    <Font Include="assets\fonts\ariblk.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
