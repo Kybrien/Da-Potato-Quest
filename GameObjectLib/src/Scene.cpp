@@ -8,6 +8,7 @@
 #include "Components/Sprite.h"
 #include "Components/SquareCollider.h"
 #include "Components/Button.h"
+#include "Components/Weapon.h"
 
 void Scene::Update()
 {
@@ -78,6 +79,26 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 	auto gameObject = new GameObject();
 	gameObject->SetName(_name);
 	gameObjects.push_back(gameObject);
+	return gameObject;
+}
+
+GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::string& _name, GameObject* player, int damage)
+{
+	auto gameObject = new GameObject();
+	gameObject->SetName(_name);
+	gameObjects.push_back(gameObject);
+
+	Sprite* sprite = new Sprite("weapon.png", 0.01);
+	sprite->setOldPosition(gameObject->GetPosition());
+	gameObject->AddComponent(sprite);
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetWidth(16.0f);
+	squareCollider->SetHeight(16.0f);
+
+	Weapon* weapon = new Weapon(window, player, damage);
+	gameObject->AddComponent(weapon);
+
 	return gameObject;
 }
 

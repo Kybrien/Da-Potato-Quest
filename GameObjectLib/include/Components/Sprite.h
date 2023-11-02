@@ -13,10 +13,10 @@ public:
 	int anim_speed = 10;
 	int count = 0;
 	
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
+	//void moveLeft();
+	//void moveRight();
+	//void moveUp();
+	//void moveDown();
 
 	void moveBack(int direction);
 

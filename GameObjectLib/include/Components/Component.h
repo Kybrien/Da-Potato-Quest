@@ -19,6 +19,6 @@ public:
 	GameObject* GetOwner() const { return owner; }
 	void SetOwner(GameObject* _owner) { owner = _owner; }
 
-private:
+protected:
 	GameObject* owner = nullptr;
 };

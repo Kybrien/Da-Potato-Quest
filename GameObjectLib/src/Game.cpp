@@ -5,6 +5,7 @@
 #include "Components/Menu.h"
 #include "Components/Sprite.h"
 #include "Components/Button.h"
+#include "Components/HealthBar.h"
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -83,6 +84,12 @@ void Game::Init() {
 	//if (animation.x * 32 >= perso.getSize().x)
 
 	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.5f);
+	weapon = scene.CreateWeaponGameObject(window, "Weapon", player, 1);
+
+	HealthBar* hb = new HealthBar(player, 3);
+	GameObject* healthBar = scene.CreateGameObject("healthBar");
+	healthBar->AddComponent(hb);
+
 	scene.setPlayer(player);
 }
 
