@@ -13,15 +13,23 @@ void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(1, 0) * dt);
+		playerSprite->setAnimation(2);
+		playerSprite->count++;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(-1, 0) * dt);
+		playerSprite->setAnimation(3);
+		playerSprite->count++;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, -1) * dt);
+		playerSprite->setAnimation(1);
+		playerSprite->count++;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		player->SetPosition(player->GetPosition() + Maths::Vector2f(0, 1) * dt);
+		playerSprite->setAnimation(0);
+		playerSprite->count++;
 	}
 }
 
@@ -74,7 +82,7 @@ void Game::Init() {
 	//animation.x++;
 	//if (animation.x * 32 >= perso.getSize().x)
 
-	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.015f);
+	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.5f);
 	scene.setPlayer(player);
 }
 

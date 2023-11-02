@@ -9,12 +9,19 @@ public:
 	Sprite(std::string texture, float scale);
 	~Sprite() override;
 
+	enum Direction {DOWN,UP,RIGHT,LEFT};
+	int anim_speed = 10;
+	int count = 0;
+	
 	void moveLeft();
 	void moveRight();
 	void moveUp();
 	void moveDown();
 
 	void moveBack(int direction);
+	void setAnimation(int y) {
+		Animation.y = y;
+	}
 
 	void setOldPosition(Maths::Vector2f position);
 	Maths::Vector2f getOldPosition();
@@ -27,5 +34,6 @@ public:
 private:
 	sf::Texture texture;
 	sf::Sprite* sprite = nullptr;
+	sf::Vector2i Animation = sf::Vector2i (1, DOWN);
 	Maths::Vector2f oldPosition;
 };

@@ -48,6 +48,14 @@ float Sprite::getOldYPosition() {
 }
 
 void Sprite::Update() {
+	if (count > anim_speed) {
+		Animation.x++;
+		if (Animation.x * 32 >= texture.getSize().x) {
+			Animation.x = 0;
+		}
+		sprite->setTextureRect(sf::IntRect(Animation.x * 32, Animation.y * 32, 32, 32));
+		count = 0;
+	}
 
 }
 
