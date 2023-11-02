@@ -33,6 +33,35 @@ void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 	}
 }
 
+void Game::FollowPlayer(GameObject* ennemi, float dt, Scene scene)
+{
+	auto EnnemiSprite = ennemi->getComponent<Sprite>();
+	EnnemiSprite->setOldPosition(ennemi->GetPosition());
+
+	int distX = player->GetPosition().GetX() - ennemi->GetPosition().GetX();
+	int distY = player->GetPosition().GetY() - ennemi->GetPosition().GetY();
+	if (distX < 0) {
+		ennemi->SetPosition(ennemi->GetPosition() + Maths::Vector2f(-10, 0) * dt);
+		EnnemiSprite->setAnimation(3);
+		EnnemiSprite->count++;
+	}
+	else if (distX > 0) {
+		ennemi->SetPosition(ennemi->GetPosition() + Maths::Vector2f(+10, 0) * dt);
+		EnnemiSprite->setAnimation(2);
+		EnnemiSprite->count++;
+	}
+	if (distY < 0) {
+		ennemi->SetPosition(ennemi->GetPosition() + Maths::Vector2f(0, -10) * dt);
+		EnnemiSprite->setAnimation(1);
+		EnnemiSprite->count++;
+	}
+	else if (distY > 0) {
+		ennemi->SetPosition(ennemi->GetPosition() + Maths::Vector2f(0, +10) * dt);
+		EnnemiSprite->setAnimation(0);
+		EnnemiSprite->count++;
+	}
+}
+
 void Game::HandleCamera(sf::View camera, GameObject* player, TileMap map) {
 	sf::Vector2f playerPosition = sf::Vector2f(player->GetPosition().x, player->GetPosition().y);
 
@@ -84,6 +113,21 @@ void Game::Init() {
 
 	player = scene.CreateDummyGameObject("Player", 200.f, "sprite_potato.png", 0.5f);
 	scene.setPlayer(player);
+
+	ennemies.push_back(scene.CreateDummyGameObject("Enemi0", 200.f, "sprite_potato.png", 0.5f));
+	Maths::Vector2<float> pos(950.0f, 380.0f);
+	ennemies[0]->SetPosition(pos);
+	scene.setPlayer(ennemies[0]);
+
+	ennemies.push_back(scene.CreateDummyGameObject("Enemi1", 200.f, "sprite_potato.png", 0.5f));
+	Maths::Vector2<float> pos1(700.0f, 500.0f);
+	ennemies[1]->SetPosition(pos1);
+	scene.setPlayer(ennemies[1]);
+
+	ennemies.push_back(scene.CreateDummyGameObject("Enemi2", 200.f, "sprite_potato.png", 0.5f));
+	Maths::Vector2<float> pos2(600.0f, 400.0f);
+	ennemies[2]->SetPosition(pos2);
+	scene.setPlayer(ennemies[2]);
 }
 
 void Game::Run() {
@@ -173,7 +217,9 @@ void Game::Run() {
 		}
 		if (gameState == PLAYING) {
 			ProcessInput(player, dt * speed, scene);
-
+			FollowPlayer(ennemies[0], dt, scene);
+			FollowPlayer(ennemies[1], dt, scene);
+			FollowPlayer(ennemies[2], dt, scene);
 			scene.setCamera(CreateCamera(5));
 
 			scene.Update();
