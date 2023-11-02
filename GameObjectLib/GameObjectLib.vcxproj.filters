@@ -57,6 +57,9 @@
     <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Components\HealthBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Maths\Vector2.cpp">
@@ -73,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="src\Scene.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\ShapeRenderer.cpp">
-      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Components\Sprite.cpp">
       <Filter>Source Files</Filter>
@@ -96,6 +96,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\ShapeRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\HealthBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

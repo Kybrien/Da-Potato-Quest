@@ -35,6 +35,9 @@
     <Image Include="assets\images\background.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\sprites\Hearts.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />

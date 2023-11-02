@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\background.png" />
+    <Image Include="assets\sprites\Hearts.png" />
     <Image Include="assets\sprites\potato.png" />
     <Image Include="assets\sprites\Sprite_potato.png" />
     <Image Include="assets\tilesets\collisions.png" />

@@ -5,6 +5,9 @@
 #include "Components/Menu.h"
 #include "Components/Sprite.h"
 #include "Components/Button.h"
+#include "Components/HealthBar.h"
+
+
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -69,6 +72,7 @@ sf::View Game::CreateCamera(float zoom) {
 	return camera;
 }
 
+
 void Game::Init() {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "DA POOTATO QUEST", sf::Style::Default);
 	//window->setVerticalSyncEnabled(true);
@@ -121,6 +125,9 @@ void Game::Run() {
 	const int speed = 50;
 
 	std::cout << gameState;
+	HealthBar* hb = new HealthBar(player, 3);
+	GameObject* healthBar = scene.CreateGameObject("healthBar");
+	healthBar->AddComponent(hb);
 
 	while (window->isOpen())
 	{
@@ -137,6 +144,10 @@ void Game::Run() {
 				}
 			}
 
+			//if (playerIsHit) {
+			//	healthBar.LoseHeart(); // Fait perdre un cœur à la barre de vie
+			//}
+
 			if (event.type == sf::Event::MouseButtonPressed) {
 				if (gameState == MAIN_MENU) {
 					sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
@@ -145,6 +156,7 @@ void Game::Run() {
 					menu.GetButtons();
 					if (menu.GetButtons()[0]->getComponent<Button>()->IsClicked(mousePos)) {
 						gameState = PLAYING;
+
 					}
 
 					// Vérifier si le bouton 2 est cliqué
@@ -178,7 +190,7 @@ void Game::Run() {
 
 			scene.Update();
 			HandleCamera(scene.getGamera(), player, map);
-			window->clear(sf::Color::Black);
+			window->clear(sf::Color::Black);;
 			window->draw(map);
 			scene.Render(window);
 			window->display();
