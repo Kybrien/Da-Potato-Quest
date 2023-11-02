@@ -26,6 +26,9 @@ public:
 		position.y = windowSize.y * _position.y;
 	}
 
+	bool isActive() { return Active; }
+	void setActive(bool state) { Active = state; }
+
 	void AddComponent(Component* _component);
 
 	template<typename T>
@@ -56,4 +59,5 @@ private:
 	std::string name = "GameObject";
 	Maths::Vector2<float> position = Maths::Vector2f::Zero;
 	std::vector<Component*> components;
+	bool Active = true;
 };

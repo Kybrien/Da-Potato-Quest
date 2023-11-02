@@ -2,7 +2,7 @@
 #include "Components/Button.h"
 #include "SFML/Graphics/Shape.hpp"
 
-Button::Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text)
+Button::Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text, sf::Color color)
 {
 	shape = new sf::RectangleShape();
 	shape->setSize(sf::Vector2f(size.x * _window->getSize().x, size.y * _window->getSize().y));
@@ -14,7 +14,7 @@ Button::Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text
 		this->text->setString(text);
 		this->text->setFont(*font);
 		this->text->setCharacterSize(24);
-		this->text->setFillColor(sf::Color::Black);
+		this->text->setFillColor(color);
 	}
 }
 

@@ -43,7 +43,9 @@ void Scene::Render(sf::RenderWindow* _window)
 {
 	for (GameObject* const& gameObject : gameObjects)
 	{
-		gameObject->Render(_window);
+		if (gameObject->isActive()) {
+			gameObject->Render(_window);
+		}
 	}
 }
 
@@ -55,7 +57,7 @@ void Scene::setPlayer(GameObject* Player) {
 	player = Player;
 }
 
-sf::View Scene::getGamera() {
+sf::View Scene::getCamera() {
 	return camera;
 }
 
@@ -90,16 +92,17 @@ GameObject* Scene::CreateDummyGameObject(const std::string& name, float position
 
 	Sprite* sprite = new Sprite(texture, scale);
 	sprite->setOldPosition(gameObject->GetPosition());
+	sprite->getSprite()->setTextureRect(sf::IntRect(sprite->getAnimation().x * 32, sprite->getAnimation().y * 32, 32, 32));
 	gameObject->AddComponent(sprite);
 
 	return gameObject;
 }
 
-GameObject* Scene::CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text) {
+GameObject* Scene::CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text, sf::Color color) {
 	GameObject* gameObject = CreateGameObject("Button");
 	gameObject->SetSPosition(window, position);
 
-	Button* button = new Button(window, size, text);
+	Button* button = new Button(window, size, text, color);
 	gameObject->AddComponent(button);
 
 	return gameObject;

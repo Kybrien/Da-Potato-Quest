@@ -19,9 +19,13 @@ public:
 	void moveDown();
 
 	void moveBack(int direction);
+
+	sf::Vector2i getAnimation() { return Animation; }
 	void setAnimation(int y) {
 		Animation.y = y;
 	}
+
+	sf::Sprite* getSprite() { return sprite; }
 
 	void setOldPosition(Maths::Vector2f position);
 	Maths::Vector2f getOldPosition();

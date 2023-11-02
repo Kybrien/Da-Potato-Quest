@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Components\SaveComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="src\TileMap.cpp" />
     <ClInclude Include="include\Components\Button.h" />
     <ClInclude Include="include\Components\Menu.h" />
     <ClInclude Include="include\Components\SaveComponent.h" />

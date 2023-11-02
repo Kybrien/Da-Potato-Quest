@@ -16,7 +16,9 @@ public:
 	GameObject* getPlayer();
 	void setPlayer(GameObject* Player);
 
-	sf::View getGamera();
+	std::vector<GameObject*> getGameObjects() { return gameObjects; }
+
+	sf::View getCamera();
 	void setCamera(sf::View newCamera);
 
 	void addCollider(SquareCollider* collider);
@@ -26,7 +28,7 @@ public:
 
 	GameObject* CreateDummyGameObject(const std::string& name, float position, const std::string texture, float scale);
 
-	GameObject* CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text);
+	GameObject* CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text, sf::Color color);
 
 private:
 	GameObject* player = nullptr;

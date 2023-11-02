@@ -6,7 +6,7 @@
 class Button : public Component
 {
 public:
-	Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text);
+	Button(sf::RenderWindow* _window, Maths::Vector2f size, std::string text, sf::Color color);
 	~Button() override;
 
 	void Render(sf::RenderWindow* _window) override;
@@ -16,7 +16,7 @@ public:
 	}
 
 private:
-	sf::Color color = sf::Color::Blue;
+	sf::Color color;
 	sf::Text* text = nullptr;
 	sf::RectangleShape* shape = nullptr;
 };

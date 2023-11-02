@@ -12,8 +12,13 @@ public:
 	Scene Init();
 
 	void CreateMainMenu();
+	void CreatePauseMenu();
+
+	void MainMenu();
+	void PauseMenu();
 
 	void Close();
+	sf::RectangleShape* GetBackground() { return background; }
 	
 	std::vector<GameObject*> GetButtons() { return buttons; }
 
@@ -24,7 +29,8 @@ public:
 private:
 	sf::RenderWindow* menuWindow = nullptr;
 	Scene* menu = nullptr;
-	sf::Texture* background = nullptr;
+	std::vector<sf::Texture*> backgroundImages;
+	sf::RectangleShape* background = nullptr;
 	std::vector<GameObject*> buttons;
 	bool open = true;
 };

@@ -90,19 +90,9 @@ void Game::Run() {
 	Menu menu(window);
 	menu.Init();
 	menu.CreateMainMenu();
+	menu.CreatePauseMenu();
 
 	std::cout << "GAME STARTED" << std::endl;
-
-	//-----------------------------------------------------------------------------------------------------------//
-	sf::Texture backgroundTexture;
-	if (!backgroundTexture.loadFromFile("assets/images/background.png")) {
-		// Gérer l'erreur si le chargement échoue
-	}
-
-	// Créer le rectangle de fond (background) avec la texture chargée
-	sf::RectangleShape background(sf::Vector2f(window->getSize().x, window->getSize().y));
-	background.setTexture(&backgroundTexture); // Appliquer la texture à la forme
-	//-----------------------------------------------------------------------------------------------------------//
 
 	//MusicComponent music(nullptr);
 	//music.LoadMusic("music.ogg");
@@ -133,18 +123,24 @@ void Game::Run() {
 			if (event.type == (sf::Event::KeyPressed)) {
 				if (event.key.code == sf::Keyboard::Escape) {
 					std::cout << "escape pressed";
-					gameState == PLAYING ? gameState = PAUSE : gameState = PLAYING;
+					if (gameState == PLAYING) {
+						gameState = PAUSE;
+						menu.PauseMenu();
+					}
+					else {
+						gameState = PLAYING;
+						menu.Close();
+					}
 				}
 			}
 
 			if (event.type == sf::Event::MouseButtonPressed) {
+				sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 				if (gameState == MAIN_MENU) {
-					sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-
 					// Vérifier si le bouton 1 est cliqué
-					menu.GetButtons();
 					if (menu.GetButtons()[0]->getComponent<Button>()->IsClicked(mousePos)) {
 						gameState = PLAYING;
+						menu.Close();
 					}
 
 					// Vérifier si le bouton 2 est cliqué
@@ -158,6 +154,16 @@ void Game::Run() {
 						//quitte le programme
 					}
 				}
+				if (gameState == PAUSE) {
+					if (menu.GetButtons()[3]->getComponent<Button>()->IsClicked(mousePos)) {
+						gameState = PLAYING;
+						menu.Close();
+					}
+					if (menu.GetButtons()[4]->getComponent<Button>()->IsClicked(mousePos)) {
+						gameState = MAIN_MENU;
+						menu.MainMenu();
+					}
+				}
 			}
 		}
 
@@ -166,7 +172,9 @@ void Game::Run() {
 
 		if (gameState == MAIN_MENU) {
 			window->clear();
-			window->draw(background);
+
+			menu.GetBackground()->setPosition(0, 0);
+			window->draw(*menu.GetBackground());
 
 			menu.RenderMenu();
 			window->display();
@@ -177,15 +185,26 @@ void Game::Run() {
 			scene.setCamera(CreateCamera(5));
 
 			scene.Update();
-			HandleCamera(scene.getGamera(), player, map);
+			HandleCamera(scene.getCamera(), player, map);
 			window->clear(sf::Color::Black);
 			window->draw(map);
 			scene.Render(window);
 			window->display();
 		}
 		if (gameState == PAUSE) {
+			window->clear();
 
+			// Positionnez le rectangle de fond au coin supérieur gauche
+			sf::View pauseCamera = CreateCamera(1);
+			pauseCamera.setCenter(window->getSize().x / 2, window->getSize().y / 2);
+			window->setView(pauseCamera);
+
+			window->draw(*menu.GetBackground());
+
+			menu.RenderMenu();
+			window->display();
 		}
 	}
+
 	save.Save(player);
 }
