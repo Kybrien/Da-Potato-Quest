@@ -13,7 +13,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
 {
 public:
 
-    bool load(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height);
+    bool load(sf::Vector2u tileSize, std::string tileFile, const std::vector<int> tiles, unsigned int width, unsigned int height);
 
     bool addCollider(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height, Scene& scene);
 

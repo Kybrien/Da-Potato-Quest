@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "TileMap.h"
 #include "Components/Button.h"
+#include "Components/MusicComponent.h"
 
 class Game {
 public:
@@ -22,6 +23,7 @@ private:
 	GameObject* player = nullptr;
 	GameObject* weapon = nullptr;
 	std::vector<GameObject*> enemies;
+	std::vector<MusicComponent*> sounds;
 	bool isPaused = false;
 	int gameState = 0; //0 = Main Menu; 1 = Playing; 2 = Pause
 };

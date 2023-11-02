@@ -5,8 +5,12 @@
 #include "Components/Sprite.h"
 #include "SFML/Graphics.hpp"
 
-Weapon::Weapon(sf::RenderWindow* window, GameObject* character, int damage)
+Weapon::Weapon(sf::RenderWindow* window, GameObject* character, std::string fileName, int damage)
 {
+	if (!texture.loadFromFile("assets/sprites/" + fileName + ".png")) {
+
+	}
+	sprite = new sf::Sprite;
     this->window = window;
 	this->character = character;
 	this->damage = damage;

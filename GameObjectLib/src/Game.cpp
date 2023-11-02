@@ -120,17 +120,25 @@ void Game::Init() {
 	GameObject* healthBar = scene.CreateGameObject("healthBar");
 	healthBar->AddComponent(hb);
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "potato", 1, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "potato", 3, 0.5f));
 	Maths::Vector2<float> pos(950.0f, 380.0f);
 	enemies[0]->SetPosition(pos);
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "potato", 1, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "potato", 3, 0.5f));
 	Maths::Vector2<float> pos1(700.0f, 500.0f);
 	enemies[1]->SetPosition(pos1);
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "potato", 1, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "potato", 3, 0.5f));
 	Maths::Vector2<float> pos2(600.0f, 400.0f);
 	enemies[2]->SetPosition(pos2);
+
+	MusicComponent* slashSound = new MusicComponent(nullptr);
+	slashSound->LoadSound("slash.ogg");
+	sounds.push_back(slashSound);
+
+	MusicComponent* deathSound = new MusicComponent(nullptr);
+	deathSound->LoadSound("death.ogg");
+	sounds.push_back(deathSound);
 
 	scene.setPlayer(player);
 }
@@ -146,9 +154,6 @@ void Game::Run() {
 	//MusicComponent music(nullptr);
 	//music.LoadMusic("music.ogg");
 	//music.Play(true);
-
-	MusicComponent deathSound(nullptr);
-	deathSound.LoadSound("death.ogg");
 
 	TileMap map;
 	map.loadmap("Lvl01", scene);
@@ -208,16 +213,15 @@ void Game::Run() {
 					Maths::Vector2f mouseWorldPos = Maths::Vector2f(player->GetPosition().x - 8 + mousePos.x, player->GetPosition().y - 8 + mousePos.y);
 					float distance = player->GetPosition().Distance(mouseWorldPos);
 					if (distance <= 25 && playerSprite->getAttacking() == false) {
-						std::cout << "Attack" << std::endl;
 						playerSprite->Attack();
 						weapon->SetPosition(Maths::Vector2f(mouseWorldPos.x + 4, mouseWorldPos.y + 4));
+						sounds[0]->Play(false);
 						for (int i = 0; i < enemies.size(); i++) {
 							GameObject* currEnemy = enemies[i];
 							if (SquareCollider::IsColliding(*currEnemy->getComponent<SquareCollider>(), *weapon->getComponent<SquareCollider>())) {
 								currEnemy->getComponent<Sprite>()->setCurrentHealth(currEnemy->getComponent<Sprite>()->getCurrentHealth() - 1);
 								if (currEnemy->getComponent<Sprite>()->getCurrentHealth() == 0) {
-									std::cout << "Dead";
-									deathSound.Play(false);
+									sounds[1]->Play(false);
 									currEnemy->getComponent<Sprite>()->Kill();
 									enemies[i] = nullptr;
 								}

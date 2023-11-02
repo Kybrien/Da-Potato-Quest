@@ -89,10 +89,6 @@ GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::s
 	gameObject->SetName(_name);
 	gameObjects.push_back(gameObject);
 
-	Sprite* sprite = new Sprite("weapon", 0, 0.01);
-	sprite->setOldPosition(gameObject->GetPosition());
-	gameObject->AddComponent(sprite);
-
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
 	squareCollider->SetWidth(16.0f);
 	squareCollider->SetHeight(16.0f);

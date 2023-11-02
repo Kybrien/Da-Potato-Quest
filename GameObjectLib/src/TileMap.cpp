@@ -1,9 +1,9 @@
 #include "TileMap.h"
 
-bool TileMap::load(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height)
+bool TileMap::load(sf::Vector2u tileSize, std::string tileFile, const std::vector<int> tiles, unsigned int width, unsigned int height)
 {
     // on charge la texture du tileset
-    if (!m_tileset.loadFromFile("assets/tilesets/tileset.png"))
+    if (!m_tileset.loadFromFile("assets/tilesets/" + tileFile))
         return false;
 
     // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
@@ -89,7 +89,7 @@ bool TileMap::loadmap(const std::string& tileset, Scene& scene) {
             m_size.SetXY(width * 16, height * 16);
 
             if (data["layers"][i]["name"] != "Collision") {
-                load(tileSize, level, width, height);
+                load(tileSize, data["tilesets"][0]["image"],level, width, height);
                 std::cout << "LAYER " << data["layers"][i]["name"] << " LOADED SUCCESSFULLY." << std::endl;
             }
             else {

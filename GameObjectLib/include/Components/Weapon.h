@@ -4,13 +4,15 @@
 
 class Weapon : public Component {
 public:
-	Weapon(sf::RenderWindow* window, GameObject* character, int damage);
+	Weapon(sf::RenderWindow* window, GameObject* character, std::string fileName, int damage);
 	~Weapon() override;
 
 	void Update() override;
 	void Render(sf::RenderWindow* _window) override;
 
 private:
+	sf::Texture texture;
+	sf::Sprite* sprite = nullptr;
 	sf::RenderWindow* window = nullptr;
 	GameObject* character;
 	int damage = 1;
