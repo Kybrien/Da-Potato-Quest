@@ -77,6 +77,26 @@ void Menu::CreatePauseMenu() {
 	buttons.push_back(button2);
 }
 
+void Menu::CreateOptionMenu() {
+	GameObject* volPlus = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "UP", sf::Color::Black);
+	GameObject* vol = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.75f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Vol", sf::Color::Black);
+	GameObject* volMoins = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.82f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Down", sf::Color::Black);
+	GameObject* DelSave = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.3f), Maths::Vector2f(0.05f, 0.3f), "Delete Save", sf::Color::Black);
+	GameObject* Close = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.4f), Maths::Vector2f(0.05f, 0.3f), "Close", sf::Color::Black);
+
+	volPlus->setActive(false);
+	vol->setActive(false);
+	volMoins->setActive(false);
+	DelSave->setActive(false);
+	Close->setActive(false);
+
+	buttons.push_back(volPlus);
+	buttons.push_back(vol);
+	buttons.push_back(volMoins);
+	buttons.push_back(DelSave);
+	buttons.push_back(Close);
+}
+
 void Menu::MainMenu() {
 	background->setSize(sf::Vector2f(menuWindow->getSize().x, menuWindow->getSize().y));
 
@@ -88,6 +108,11 @@ void Menu::MainMenu() {
 
 	buttons[3]->setActive(false);
 	buttons[4]->setActive(false);
+	buttons[5]->setActive(false);
+	buttons[6]->setActive(false);
+	buttons[7]->setActive(false);
+	buttons[8]->setActive(false);
+	buttons[9]->setActive(false);
 }
 
 void Menu::PauseMenu() {
@@ -98,9 +123,32 @@ void Menu::PauseMenu() {
 	buttons[0]->setActive(false);
 	buttons[1]->setActive(false);
 	buttons[2]->setActive(false);
+	buttons[5]->setActive(false);
+	buttons[6]->setActive(false);
+	buttons[7]->setActive(false);
+	buttons[8]->setActive(false);
+	buttons[9]->setActive(false);
 
 	buttons[3]->setActive(true);
 	buttons[4]->setActive(true);
+}
+
+void Menu::OptionMenu() {
+	background->setSize(sf::Vector2f(menuWindow->getSize().x, menuWindow->getSize().y));
+
+	background->setTexture(backgroundImages[0], true);
+
+	buttons[0]->setActive(false);
+	buttons[1]->setActive(false);
+	buttons[2]->setActive(false);
+	buttons[3]->setActive(false);
+	buttons[4]->setActive(false);
+
+	buttons[5]->setActive(true);
+	buttons[6]->setActive(true);
+	buttons[7]->setActive(true);
+	buttons[8]->setActive(true);
+	buttons[9]->setActive(true);
 }
 
 void Menu::RenderMenu() {

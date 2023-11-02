@@ -13,9 +13,11 @@ public:
 
 	void CreateMainMenu();
 	void CreatePauseMenu();
+	void CreateOptionMenu();
 
 	void MainMenu();
 	void PauseMenu();
+	void OptionMenu();
 
 	void Close();
 	sf::RectangleShape* GetBackground() { return background; }

@@ -7,7 +7,7 @@
 
 class Game {
 public:
-	enum GAME_STATES { MAIN_MENU, PLAYING, PAUSE };
+	enum GAME_STATES { MAIN_MENU, PLAYING, PAUSE , OPTION };
 	void Init();
 	void Run();
 
