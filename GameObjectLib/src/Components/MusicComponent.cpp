@@ -11,6 +11,8 @@ bool MusicComponent::LoadSound(const std::string& filePath)
 
 bool MusicComponent::LoadMusic(const std::string& filePath)
 {
+    music.setVolume(50);
+    this->MusicVolume = 50;
     return music.openFromFile("assets/music/" + filePath);
 }
 
@@ -32,6 +34,7 @@ void MusicComponent::Stop()
 
 void MusicComponent::SetVolume(int Vol) {
     music.setVolume(Vol);
+    this->MusicVolume = Vol;
 }
 
 void MusicComponent::VolumePlus()

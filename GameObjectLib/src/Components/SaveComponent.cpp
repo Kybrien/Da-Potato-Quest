@@ -1,10 +1,11 @@
 #include "Components/SaveComponent.h"
+#include "Components/MusicComponent.h"
 
 SaveComponent::SaveComponent(GameObject* owner) : Component(owner) {}
 
 SaveComponent::~SaveComponent() {}
 
-void SaveComponent::LoadSave(GameObject* player) {
+void SaveComponent::LoadSave(GameObject* player , MusicComponent* music) {
     std::ifstream fichier(SavePath);
     // Vérifier si l'ouverture du fichier a réussi
     if (fichier.is_open()) {
@@ -14,11 +15,13 @@ void SaveComponent::LoadSave(GameObject* player) {
             std::istringstream lineValue(ligne);
             char comma;
             rows++;
-            float x, y , z;
-            if (lineValue >> x >> comma >> y) {
+            float x, y , vol;
+            if (lineValue >> x >> comma >> y >> comma >> vol) {
                 // Les valeurs ont été extraites avec succès
                 Maths::Vector2<float> pos(x, y);
                 player->SetPosition(pos);
+                music->SetVolume(vol);
+                std::cout << "volume set to" << vol << " actual vol = " << music->GetVolume();
             }
         }
         if (rows == 0) {
@@ -33,18 +36,26 @@ void SaveComponent::LoadSave(GameObject* player) {
     }
 }
 
-void SaveComponent::Save(GameObject* player) {
+void SaveComponent::Save(GameObject* player, MusicComponent* music) {
     std::ofstream fichier(SavePath);
     Maths::Vector2<float> pos = player->GetPosition();
     float x = pos.GetX();
     float y = pos.GetY();
 
     if (fichier.is_open()) {
-        fichier << x << "," << y << "\n";
+        fichier << x << "," << y << "," << music->GetVolume() << "\n";
         fichier.close();
     }
     else {
         std::cout << "cant save" << std::endl;
     }
+}
+
+void SaveComponent::DelSave() {
+    std::ofstream fichier(SavePath);
+    if (fichier.is_open()) {
+        fichier << "";
+    }
+    fichier.close();
 }
 

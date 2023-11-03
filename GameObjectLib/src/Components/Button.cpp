@@ -38,3 +38,7 @@ void Button::Render(sf::RenderWindow* _window)
 	_window->draw(*text);
 }
 
+void Button::setText(std::string txt) {
+	this->text->setString(txt);
+}
+

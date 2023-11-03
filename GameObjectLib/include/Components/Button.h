@@ -10,6 +10,7 @@ public:
 	~Button() override;
 
 	void Render(sf::RenderWindow* _window) override;
+	void setText(std::string txt);
 	bool IsClicked(const sf::Vector2f& mousePos) const {
 		sf::FloatRect buttonBounds = shape->getGlobalBounds();
 		return buttonBounds.contains(mousePos);

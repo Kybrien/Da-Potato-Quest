@@ -2,6 +2,7 @@
 #include "Game.h"
 
 #include "Components/SaveComponent.h"
+#include "Components/MusicComponent.h"
 #include "Components/Menu.h"
 #include "Components/Sprite.h"
 #include "Components/Button.h"
@@ -149,18 +150,19 @@ void Game::Run() {
 	menu.Init();
 	menu.CreateMainMenu();
 	menu.CreatePauseMenu();
+	menu.CreateOptionMenu();
 
 	std::cout << "GAME STARTED" << std::endl;
-
-	//MusicComponent music(nullptr);
-	//music.LoadMusic("music.ogg");
-	//music.Play(true);
-
+	SaveComponent save(nullptr);
+	MusicComponent* music = new MusicComponent(nullptr);
+	music->LoadMusic("music.ogg");
+	save.LoadSave(player, music);
+	music->Play(true);
 	TileMap map;
 	map.loadmap("Lvl01", scene);
 
-	SaveComponent save(nullptr);
-	save.LoadSave(player);
+	
+	
 
 	sf::Clock clock;
 	sf::Time time;
@@ -200,7 +202,8 @@ void Game::Run() {
 
 					// Vérifier si le bouton 2 est cliqué
 					else if (menu.GetButtons()[1]->getComponent<Button>()->IsClicked(mousePos)) {
-						// Faites quelque chose avec le bouton 2
+						gameState = OPTION;
+						menu.OptionMenu();
 					}
 
 					// Vérifier si le bouton 3 est cliqué
@@ -239,6 +242,23 @@ void Game::Run() {
 						menu.Close();
 					}
 					if (menu.GetButtons()[4]->getComponent<Button>()->IsClicked(mousePos)) {
+						gameState = MAIN_MENU;
+						menu.MainMenu();
+					}
+				}
+				if (gameState == OPTION) {
+					if (menu.GetButtons()[5]->getComponent<Button>()->IsClicked(mousePos)) {
+						music->VolumePlus();
+					}
+					menu.GetButtons()[6]->getComponent<Button>()->setText(std::to_string(music->GetVolume()));
+					if (menu.GetButtons()[7]->getComponent<Button>()->IsClicked(mousePos)) {
+						music->VolumeMoins();
+					}
+					if (menu.GetButtons()[8]->getComponent<Button>()->IsClicked(mousePos)) {
+						save.DelSave();
+						//Il faut reset le jeu
+					}
+					if (menu.GetButtons()[9]->getComponent<Button>()->IsClicked(mousePos)) {
 						gameState = MAIN_MENU;
 						menu.MainMenu();
 					}
@@ -287,7 +307,17 @@ void Game::Run() {
 			menu.RenderMenu();
 			window->display();
 		}
-	}
+		if (gameState == OPTION) {
+			window->clear();
+			sf::View OptionCam = CreateCamera(1);
+			OptionCam.setCenter(window->getSize().x / 2, window->getSize().y / 2);
+			window->setView(OptionCam);
 
-	save.Save(player);
+			window->draw(*menu.GetBackground());
+
+			menu.RenderMenu();
+			window->display();
+		}
+	}
+	save.Save(player , music);
 }
