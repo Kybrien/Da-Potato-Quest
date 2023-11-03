@@ -37,6 +37,10 @@ public:
 
 	void AddComponent(Component* _component);
 
+	int GetKill();
+	void IncrementKill();
+	void SetKill(int kill);
+
 	template<typename T>
 	T* CreateComponent()
 	{
@@ -66,4 +70,5 @@ private:
 	Maths::Vector2<float> position = Maths::Vector2f::Zero;
 	std::vector<Component*> components;
 	bool Active = true;
+	int killcount = 0;
 };

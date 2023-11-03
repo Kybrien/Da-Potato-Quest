@@ -15,11 +15,12 @@ void SaveComponent::LoadSave(GameObject* player , MusicComponent* music) {
             std::istringstream lineValue(ligne);
             char comma;
             rows++;
-            float x, y , vol;
-            if (lineValue >> x >> comma >> y >> comma >> vol) {
+            float x, y , vol, kill;
+            if (lineValue >> x >> comma >> y >> comma >> vol >> comma >> kill)  {
                 // Les valeurs ont été extraites avec succès
                 Maths::Vector2<float> pos(x, y);
                 player->SetPosition(pos);
+                player->SetKill(kill);
                 music->SetVolume(vol);
                 std::cout << "volume set to" << vol << " actual vol = " << music->GetVolume();
             }
@@ -43,7 +44,7 @@ void SaveComponent::Save(GameObject* player, MusicComponent* music) {
     float y = pos.GetY();
 
     if (fichier.is_open()) {
-        fichier << x << "," << y << "," << music->GetVolume() << "\n";
+        fichier << x << "," << y << "," << music->GetVolume() << ","<< player->GetKill() << "\n";
         fichier.close();
     }
     else {

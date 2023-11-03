@@ -26,3 +26,15 @@ void GameObject::Render(sf::RenderWindow* _window) const
 		component->Render(_window);
 	}
 }
+
+int GameObject::GetKill() {
+	return this->killcount;
+}
+
+void GameObject::IncrementKill() {
+	this->killcount++;
+}
+
+void GameObject::SetKill(int kill) {
+	this->killcount = kill;
+}

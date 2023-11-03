@@ -226,6 +226,8 @@ void Game::Run() {
 							if (SquareCollider::IsColliding(*currEnemy->getComponent<SquareCollider>(), *weapon->getComponent<SquareCollider>())) {
 								currEnemy->getComponent<Sprite>()->setCurrentHealth(currEnemy->getComponent<Sprite>()->getCurrentHealth() - 1);
 								if (currEnemy->getComponent<Sprite>()->getCurrentHealth() == 0) {
+									player->IncrementKill();
+									std::cout << player->GetKill()<<std::endl;
 									sounds[1]->Play(false);
 									currEnemy->getComponent<Sprite>()->Kill();
 									enemies[i] = nullptr;
