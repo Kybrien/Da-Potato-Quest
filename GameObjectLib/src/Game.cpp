@@ -44,6 +44,13 @@ void Game::FollowPlayer(GameObject* enemy, float dt, Scene scene)
 
 	int distX = player->GetPosition().GetX() - enemy->GetPosition().GetX();
 	int distY = player->GetPosition().GetY() - enemy->GetPosition().GetY();
+
+	float distance = enemy->GetPosition().Distance(player->GetPosition());
+
+	if (distance > 75) {
+		return;
+	}
+
 	if (distX < 0) {
 		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(-10, 0) * dt);
 		EnemySprite->setAnimation(3);
@@ -121,16 +128,17 @@ void Game::Init() {
 	HealthBar* hb = new HealthBar(player);
 	GameObject* healthBar = scene.CreateGameObject("healthBar");
 	healthBar->AddComponent(hb);
+	this->healthbar = healthBar;
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "potato", 3, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "enemy_potato", 3, 0.5f));
 	Maths::Vector2<float> pos(950.0f, 380.0f);
 	enemies[0]->SetPosition(pos);
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "potato", 3, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "enemy_potato", 3, 0.5f));
 	Maths::Vector2<float> pos1(700.0f, 500.0f);
 	enemies[1]->SetPosition(pos1);
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "potato", 3, 0.5f));
+	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "enemy_potato", 3, 0.5f));
 	Maths::Vector2<float> pos2(600.0f, 400.0f);
 	enemies[2]->SetPosition(pos2);
 
@@ -141,6 +149,12 @@ void Game::Init() {
 	MusicComponent* deathSound = new MusicComponent(nullptr);
 	deathSound->LoadSound("death.ogg");
 	sounds.push_back(deathSound);
+
+	GameObject* teleporter = new GameObject;
+	SquareCollider* tpCollider = new SquareCollider;
+	teleporter->SetPosition(Maths::Vector2f(352.0f, 1344.0f));
+	teleporter->AddComponent(tpCollider);
+	scene.addTeleporter(teleporter);
 
 	scene.setPlayer(player);
 }
@@ -160,9 +174,6 @@ void Game::Run() {
 	music->Play(true);
 	TileMap map;
 	map.loadmap("Lvl01", scene);
-
-	
-	
 
 	sf::Clock clock;
 	sf::Time time;
@@ -279,10 +290,18 @@ void Game::Run() {
 			window->display();
 		}
 		if (gameState == PLAYING) {
+			// Code pas rangé par manque de temps
 			ProcessInput(player, dt * speed, scene);
 			for (int i = 0; i < enemies.size(); i++) {
 				FollowPlayer(enemies[i], dt, scene);
 			}
+
+			if (SquareCollider::IsColliding(*player->getComponent<SquareCollider>(), *scene.getTeleporters()[0]->getComponent<SquareCollider>())) {
+				scene.clearCollider();
+				map.loadmap("Lvl02", scene);
+				player->SetPosition(Maths::Vector2f(112.0f, 64.0f));
+			}
+			//
 
 			scene.setCamera(CreateCamera(5));
 
@@ -291,6 +310,7 @@ void Game::Run() {
 			window->clear(sf::Color::Black);
 			window->draw(map);
 			scene.Render(window);
+			healthbar->getComponent<HealthBar>()->RenderGui(window);
 			window->setView(scene.getCamera());
 			window->display();
 		}

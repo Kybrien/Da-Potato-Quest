@@ -7,7 +7,7 @@ public:
     HealthBar(GameObject* Character);
     void SetHealth(int health);
     void LoseHeart();
-    void Render(sf::RenderWindow* window) override;
+    void RenderGui(sf::RenderWindow* window);
     void Update() override;
 
 private:

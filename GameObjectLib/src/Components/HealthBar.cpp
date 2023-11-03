@@ -9,6 +9,7 @@ HealthBar::HealthBar(GameObject* Character) : Character(Character) {
         // Gestion de l'erreur si le chargement échoue
     }
     heartSprite = new sf::Sprite(*heartTexture);
+    heartSprite->setScale(2, 2);
     heartSprite->setTextureRect(sf::IntRect(0, currentHealth * 32, 96, 32));
     heartSprite->setPosition(0 * heartSprite->getGlobalBounds().width, 0);
 
@@ -30,11 +31,11 @@ void HealthBar::LoseHeart() {
     }
 }
 
-void HealthBar::Render(sf::RenderWindow* window) {
+void HealthBar::RenderGui(sf::RenderWindow* window) {
     sf::View guiView;
     guiView.setSize(window->getSize().x, window->getSize().y);
     guiView.setCenter(window->getSize().x / 2, window->getSize().y / 2);
-    //window->setView(guiView);
+    window->setView(guiView);
 
     heartSprite->setPosition(0, 0);
 

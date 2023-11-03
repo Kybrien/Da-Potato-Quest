@@ -17,6 +17,8 @@ public:
 
     bool addCollider(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height, Scene& scene);
 
+    bool unload();
+
     bool loadmap(const std::string& tileset, Scene& scene);
 
     int getWidth();
