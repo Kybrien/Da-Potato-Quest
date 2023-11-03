@@ -93,7 +93,7 @@ GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::s
 	squareCollider->SetWidth(16.0f);
 	squareCollider->SetHeight(16.0f);
 
-	Weapon* weapon = new Weapon(window, player, damage);
+	Weapon* weapon = new Weapon(window, player, "slash", damage);
 	gameObject->AddComponent(weapon);
 
 	return gameObject;

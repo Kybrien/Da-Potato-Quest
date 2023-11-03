@@ -7,10 +7,14 @@
 
 Weapon::Weapon(sf::RenderWindow* window, GameObject* character, std::string fileName, int damage)
 {
-	if (!texture.loadFromFile("assets/sprites/" + fileName + ".png")) {
-
+	if (texture.loadFromFile("assets/sprites/" + fileName + ".png")) {
+		sprite = new sf::Sprite(texture);
+		//sprite->setScale(sf::Vector2f(1 / (texture.getSize().y / 16), 1 / (texture.getSize().y / 16)));
+		std::cout << "Weapon " << fileName << " loaded." << std::endl;
 	}
-	sprite = new sf::Sprite;
+	else {
+		std::cout << "SA MARCHE PAS" << std::endl;
+	}
     this->window = window;
 	this->character = character;
 	this->damage = damage;
@@ -28,5 +32,12 @@ void Weapon::Update()
 
 void Weapon::Render(sf::RenderWindow* _window)
 {
+	Component::Render(_window);
 
+	const auto ownerPos = GetOwner()->GetPosition();
+	sprite->setPosition(ownerPos.x, ownerPos.y);
+
+	_window->draw(*sprite);
+
+	std::cout << texture.getSize().x;
 }
