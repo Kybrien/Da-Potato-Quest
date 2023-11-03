@@ -78,11 +78,11 @@ void Menu::CreatePauseMenu() {
 }
 
 void Menu::CreateOptionMenu() {
-	GameObject* volPlus = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "UP", sf::Color::Black);
-	GameObject* vol = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.75f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Vol", sf::Color::Black);
-	GameObject* volMoins = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.82f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Down", sf::Color::Black);
-	GameObject* DelSave = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.3f), Maths::Vector2f(0.05f, 0.3f), "Delete Save", sf::Color::Black);
-	GameObject* Close = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.4f), Maths::Vector2f(0.05f, 0.3f), "Close", sf::Color::Black);
+	GameObject* volPlus = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "UP", sf::Color::White);
+	GameObject* vol = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.75f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Vol", sf::Color::White);
+	GameObject* volMoins = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.82f, 0.3f), Maths::Vector2f(0.05f, 0.05f), "Down", sf::Color::White);
+	GameObject* DelSave = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.3f), Maths::Vector2f(0.05f, 0.3f), "Delete Save", sf::Color::White);
+	GameObject* Close = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.76f, 0.4f), Maths::Vector2f(0.05f, 0.3f), "Close", sf::Color::White);
 
 	volPlus->setActive(false);
 	vol->setActive(false);
