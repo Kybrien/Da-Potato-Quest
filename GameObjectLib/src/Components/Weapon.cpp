@@ -9,11 +9,9 @@ Weapon::Weapon(sf::RenderWindow* window, GameObject* character, std::string file
 {
 	if (texture.loadFromFile("assets/sprites/" + fileName + ".png")) {
 		sprite = new sf::Sprite(texture);
-		//sprite->setScale(sf::Vector2f(1 / (texture.getSize().y / 16), 1 / (texture.getSize().y / 16)));
+		sprite->setScale(0.5, 0.5);
+		sprite->setTextureRect(sf::IntRect(0 * sprite->getTexture()->getSize().y, 0, sprite->getTexture()->getSize().y, sprite->getTexture()->getSize().y));
 		std::cout << "Weapon " << fileName << " loaded." << std::endl;
-	}
-	else {
-		std::cout << "SA MARCHE PAS" << std::endl;
 	}
     this->window = window;
 	this->character = character;
@@ -25,8 +23,17 @@ Weapon::~Weapon()
 	
 }
 
+void Weapon::Attack()
+{
+	count = 0;
+}
+
 void Weapon::Update() 
 {
+	if (count / 2 < sprite->getTexture()->getSize().x / sprite->getTexture()->getSize().y) {
+		++count;
+		sprite->setTextureRect(sf::IntRect((count / 2) * sprite->getTexture()->getSize().y, 0, sprite->getTexture()->getSize().y, sprite->getTexture()->getSize().y));
+	}
 	//owner->SetPosition(character->GetPosition());
 }
 
@@ -38,6 +45,4 @@ void Weapon::Render(sf::RenderWindow* _window)
 	sprite->setPosition(ownerPos.x, ownerPos.y);
 
 	_window->draw(*sprite);
-
-	std::cout << texture.getSize().x;
 }

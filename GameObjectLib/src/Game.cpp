@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "Components/HealthBar.h"
 #include "Components/MusicComponent.h"
+#include "Components/Weapon.h"
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -214,6 +215,7 @@ void Game::Run() {
 					float distance = player->GetPosition().Distance(mouseWorldPos);
 					if (distance <= 25 && playerSprite->getAttacking() == false) {
 						playerSprite->Attack();
+						weapon->getComponent<Weapon>()->Attack();
 						weapon->SetPosition(Maths::Vector2f(mouseWorldPos.x + 4, mouseWorldPos.y + 4));
 						sounds[0]->Play(false);
 						for (int i = 0; i < enemies.size(); i++) {
