@@ -50,13 +50,13 @@ void Menu::CreateMainMenu() {
 	background->setTexture(backgroundImages[0], true);
 
 	// Créer le premier bouton à partir du coin supérieur droit de l'écran
-	GameObject* button1 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.25f, 0.1f), "JOUER", sf::Color::Black);
+	GameObject* button1 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.3f), Maths::Vector2f(0.25f, 0.1f), "JOUER", sf::Color::White);
 
 	// Créer le deuxième bouton en dessous du premier
-	GameObject* button2 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.5f), Maths::Vector2f(0.25f, 0.1f), "OPTIONS", sf::Color::Black);
+	GameObject* button2 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.5f), Maths::Vector2f(0.25f, 0.1f), "OPTIONS", sf::Color::White);
 
 	// Créer le troisième bouton en dessous du deuxième
-	GameObject* button3 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.7f), Maths::Vector2f(0.25f, 0.1f), "QUITTER", sf::Color::Black);
+	GameObject* button3 = menu->CreateButtonGameObject(menuWindow, Maths::Vector2f(0.7f, 0.7f), Maths::Vector2f(0.25f, 0.1f), "QUITTER", sf::Color::White);
 
 	buttons.push_back(button1);
 	buttons.push_back(button2);
