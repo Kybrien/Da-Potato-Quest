@@ -7,8 +7,10 @@
 #include "Components/Sprite.h"
 #include "Components/Button.h"
 #include "Components/HealthBar.h"
+#include "Components/Achievement.h"
 #include "Components/MusicComponent.h"
 #include "Components/Weapon.h"
+#include <random>
 
 void Game::ProcessInput(GameObject* player, float dt, Scene scene)
 {
@@ -47,9 +49,9 @@ void Game::FollowPlayer(GameObject* enemy, float dt, Scene scene)
 
 	float distance = enemy->GetPosition().Distance(player->GetPosition());
 
-	if (distance > 75) {
-		return;
-	}
+	//if (distance > 75) {
+	//	return;
+	//}
 
 	if (distX < 0) {
 		enemy->SetPosition(enemy->GetPosition() + Maths::Vector2f(-10, 0) * dt);
@@ -130,17 +132,10 @@ void Game::Init() {
 	healthBar->AddComponent(hb);
 	this->healthbar = healthBar;
 
-	enemies.push_back(scene.CreateDummyGameObject("Enemy0", 200.f, "enemy_potato", 3, 0.5f));
-	Maths::Vector2<float> pos(950.0f, 380.0f);
-	enemies[0]->SetPosition(pos);
-
-	enemies.push_back(scene.CreateDummyGameObject("Enemy1", 200.f, "enemy_potato", 3, 0.5f));
-	Maths::Vector2<float> pos1(700.0f, 500.0f);
-	enemies[1]->SetPosition(pos1);
-
-	enemies.push_back(scene.CreateDummyGameObject("Enemy2", 200.f, "enemy_potato", 3, 0.5f));
-	Maths::Vector2<float> pos2(600.0f, 400.0f);
-	enemies[2]->SetPosition(pos2);
+	Achievement* ach = new Achievement(player , "You Killed 3 Ennemies");
+	GameObject* achievement = scene.CreateGameObject("achievement");
+	achievement->AddComponent(ach);
+	this->achievement = achievement;
 
 	MusicComponent* slashSound = new MusicComponent(nullptr);
 	slashSound->LoadSound("slash.ogg");
@@ -176,6 +171,9 @@ void Game::Run() {
 	map.loadmap("Lvl01", scene);
 
 	sf::Clock clock;
+	bool achievementVisible = false;
+	sf::Clock AchievementClock;
+	sf::Clock SpawnClock;
 	sf::Time time;
 
 	float dt = 0;
@@ -238,7 +236,10 @@ void Game::Run() {
 								currEnemy->getComponent<Sprite>()->setCurrentHealth(currEnemy->getComponent<Sprite>()->getCurrentHealth() - 1);
 								if (currEnemy->getComponent<Sprite>()->getCurrentHealth() == 0) {
 									player->IncrementKill();
-									std::cout << player->GetKill()<<std::endl;
+									if (player->GetKill() == 3) {
+										achievementVisible = true;
+										AchievementClock.restart();
+									}
 									sounds[1]->Play(false);
 									currEnemy->getComponent<Sprite>()->Kill();
 									enemies[i] = nullptr;
@@ -305,7 +306,24 @@ void Game::Run() {
 			}
 			//
 
+
 			scene.setCamera(CreateCamera(5));
+
+			if (SpawnClock.getElapsedTime().asSeconds() > 5.0f) {
+				std::cout << "dummies Spawned" << std::endl;
+				for (int i = 0; i != 5; i++) {
+					enemies.push_back(scene.CreateDummyGameObject("Enemy" + std::to_string(enemies.size()), 200.f, "enemy_potato", 3, 0.5f));
+					std::random_device rd;
+					std::mt19937 gen(rd());
+					std::uniform_real_distribution<float> dis(0, 16*100);
+					float x = dis(gen);
+					float y = dis(gen);
+					Maths::Vector2<float> SpawnPoint(x, y);
+					enemies[enemies.size() - 1]->SetPosition(SpawnPoint);
+
+				}
+				SpawnClock.restart();
+			}
 
 			scene.Update();
 			HandleCamera(scene.getCamera(), player, map);
@@ -313,6 +331,12 @@ void Game::Run() {
 			window->draw(map);
 			scene.Render(window);
 			healthbar->getComponent<HealthBar>()->RenderGui(window);
+			if (achievementVisible)
+			{
+				achievement->getComponent<Achievement>()->RenderGui(window);
+				if (AchievementClock.getElapsedTime().asSeconds() > 3.0f)
+					achievementVisible = false;
+			}
 			window->setView(scene.getCamera());
 			window->display();
 		}
