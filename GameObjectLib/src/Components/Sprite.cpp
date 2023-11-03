@@ -2,6 +2,7 @@
 #include "Components/Sprite.h"
 #include "Components/MusicComponent.h"
 #include "SFML/Graphics.hpp"
+#include "Scene.h"
 
 Sprite::Sprite(std::string newTexture, int maxHealth, float scale) : maxHealth(maxHealth), currHealth(maxHealth)
 {
@@ -59,6 +60,7 @@ void Sprite::Attack() {
 
 void Sprite::Kill() {
 	owner->setActive(false);
+	owner->GetOwner()->DeleteGameObject(owner);
 	delete owner;
 	owner = nullptr;
 }

@@ -79,13 +79,14 @@ GameObject* Scene::CreateGameObject(const std::string& _name)
 {
 	auto gameObject = new GameObject();
 	gameObject->SetName(_name);
+	gameObject->SetOwner(this);
 	gameObjects.push_back(gameObject);
 	return gameObject;
 }
 
 GameObject* Scene::CreateWeaponGameObject(sf::RenderWindow* window, const std::string& _name, GameObject* player, int damage)
 {
-	auto gameObject = new GameObject();
+	auto gameObject = CreateGameObject("Weapons");
 	gameObject->SetName(_name);
 	gameObjects.push_back(gameObject);
 

@@ -13,17 +13,17 @@ void GameObject::RemoveComponent(Component* _component)
 
 void GameObject::Update() const
 {
-	for (Component* const& component : components)
+	for (size_t i = 0; i < components.size(); i++)
 	{
-		component->Update();
+		components[i]->Update();
 	}
 }
 
 void GameObject::Render(sf::RenderWindow* _window) const
 {
-	for (Component* const& component : components)
+	for (size_t i = 0; i < components.size(); i++)
 	{
-		component->Render(_window);
+		components[i]->Render(_window);
 	}
 }
 

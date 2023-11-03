@@ -8,6 +8,7 @@
 #include "Components/Component.h"
 
 class Component;
+class Scene;
 
 class GameObject
 {
@@ -31,6 +32,9 @@ public:
 		position.x = windowSize.x * _position.x;
 		position.y = windowSize.y * _position.y;
 	}
+
+	void SetOwner(Scene* sceneOwner) { SceneOwner = sceneOwner; }
+	Scene* GetOwner() { return SceneOwner; }
 
 	bool isActive() { return Active; }
 	void setActive(bool state) { Active = state; }
@@ -71,4 +75,5 @@ private:
 	std::vector<Component*> components;
 	bool Active = true;
 	int killcount = 0;
+	Scene* SceneOwner = nullptr;
 };

@@ -36,6 +36,18 @@ public:
 
 	GameObject* CreateButtonGameObject(sf::RenderWindow* window, Maths::Vector2f position, Maths::Vector2f size, std::string text, sf::Color color);
 
+	void DeleteGameObject(GameObject* go)
+	{
+		for (size_t i = 0; i < gameObjects.size(); i++)
+		{
+			if (gameObjects[i] == go)
+			{
+				gameObjects.erase(gameObjects.begin() + i);
+				return;
+			}
+		}
+	}
+
 private:
 	GameObject* player = nullptr;
 	sf::View camera;

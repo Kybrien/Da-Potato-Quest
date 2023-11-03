@@ -166,7 +166,7 @@ void Game::Run() {
 	MusicComponent* music = new MusicComponent(nullptr);
 	music->LoadMusic("music.ogg");
 	save.LoadSave(player, music);
-	music->Play(true);
+	//music->Play(true);
 	TileMap map;
 	map.loadmap("Lvl01", scene);
 
@@ -242,7 +242,7 @@ void Game::Run() {
 									}
 									sounds[1]->Play(false);
 									currEnemy->getComponent<Sprite>()->Kill();
-									enemies[i] = nullptr;
+									enemies.erase(enemies.begin() + i);
 								}
 							}
 						}
