@@ -22,6 +22,7 @@ private:
 	Scene scene;
 	GameObject* player = nullptr;
 	GameObject* weapon = nullptr;
+	GameObject* healthbar = nullptr;
 	std::vector<GameObject*> enemies;
 	std::vector<MusicComponent*> sounds;
 	bool isPaused = false;

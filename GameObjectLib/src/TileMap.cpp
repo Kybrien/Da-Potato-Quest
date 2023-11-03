@@ -46,6 +46,12 @@ bool TileMap::load(sf::Vector2u tileSize, std::string tileFile, const std::vecto
     return true;
 }
 
+bool TileMap::unload() {
+    m_layers.clear();
+
+    return 1;
+}
+
 bool TileMap::addCollider(sf::Vector2u tileSize, const std::vector<int> tiles, unsigned int width, unsigned int height, Scene& scene) {
     for (unsigned int i = 0; i < width; ++i)
         for (unsigned int j = 0; j < height; ++j)

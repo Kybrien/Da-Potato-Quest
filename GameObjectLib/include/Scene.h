@@ -21,8 +21,12 @@ public:
 	sf::View getCamera();
 	void setCamera(sf::View newCamera);
 
+	void clearCollider() { colliders.clear(); }
 	void addCollider(SquareCollider* collider);
 	std::vector<SquareCollider*> getColliders();
+
+	void addTeleporter(GameObject* teleporter) { teleporters.push_back(teleporter); }
+	std::vector<GameObject*> getTeleporters() { return teleporters; }
 
 	GameObject* CreateGameObject(const std::string& _name);
 
@@ -36,5 +40,6 @@ private:
 	GameObject* player = nullptr;
 	sf::View camera;
 	std::vector<GameObject*> gameObjects;
+	std::vector<GameObject*> teleporters;
 	std::vector<SquareCollider*> colliders;
 };
