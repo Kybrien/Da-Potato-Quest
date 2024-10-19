@@ -1,1 +1,8 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/PfohjMTJ)
+### Da Potato Quest
+This vertical slice was made in 3 weeks to introduce us to Game programming in C++.   
+All the animations were made by myself on Aseprite and the map was made on Tiled.   
+Nothing much to say, we added a save manager to try things here and there but we won't complain about the final result.   
+
+## Screen Samples :
+![Menu](DaPotatoQuest/menu.PNG)
+![Gameplay](DaPotatoQuest/Gameplay.PNG)
